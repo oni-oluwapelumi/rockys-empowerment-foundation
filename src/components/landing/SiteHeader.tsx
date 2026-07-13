@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Menu, HeartHandshake } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
-import logo from "@/assets/logo.png";
 
 const links = [
   { href: "#home", label: "Home" },
@@ -28,12 +27,9 @@ export function SiteHeader() {
             e.preventDefault();
             scrollTo("home");
           }}
-          className="flex items-center gap-3 min-w-0"
+          className="min-w-0"
         >
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#F5EFE6] shadow-md ring-2 ring-primary/20">
-            <img src={logo} alt="Rocky's Empowerment Foundation" className="h-9 w-9 rounded-full object-contain" />
-          </span>
-          <span className="truncate font-display text-base font-semibold text-secondary sm:text-lg">
+          <span className="truncate font-display text-lg font-bold tracking-tight text-secondary sm:text-xl">
             Rocky's Empowerment Foundation
           </span>
         </a>
