@@ -1,5 +1,5 @@
 import { Quote } from "lucide-react";
-import founderImg from "@/assets/founder.jpg";
+import founderAsset from "@/assets/founder.jpg.asset.json";
 
 export function FounderVision() {
   return (
@@ -12,8 +12,8 @@ export function FounderVision() {
               <div className="absolute -bottom-4 -right-4 h-24 w-24 rounded-full bg-gold/40 blur-2xl" />
               <div className="relative overflow-hidden rounded-3xl shadow-xl ring-1 ring-primary/20">
                 <img
-                  src={founderImg}
-                  alt="Founder of Rocky's Empowerment Foundation"
+                  src={founderAsset.url}
+                  alt="Oluwatoyin Alonge, Founder of Rocky's Empowerment Foundation"
                   loading="lazy"
                   width={1024}
                   height={1200}
@@ -38,9 +38,14 @@ export function FounderVision() {
             </div>
             <div className="mt-8 flex items-center gap-4">
               <div className="h-px w-12 bg-primary" />
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground">
-                The Founder's Vision — Rocky's Empowerment Foundation
-              </p>
+              <div>
+                <p className="font-display text-lg font-semibold text-secondary">
+                  Oluwatoyin Alonge
+                </p>
+                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+                  Founder — Rocky's Empowerment Foundation
+                </p>
+              </div>
             </div>
           </div>
         </div>
