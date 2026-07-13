@@ -20,7 +20,11 @@ export function Hero() {
             Inaugural Program Launching August 2026
           </span>
           <h1 className="mt-6 font-display text-4xl font-bold leading-[1.1] text-secondary sm:text-5xl lg:text-6xl">
-            Empowering Lives, Restoring Hope, and Transforming Communities From the Ground Up.
+            Empowering Lives, Restoring Hope, and{" "}
+            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              Transforming Communities
+            </span>{" "}
+            From the Ground Up.
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
             Rocky's Empowerment Foundation is a dedicated humanitarian initiative focused on
@@ -61,7 +65,7 @@ export function Hero() {
         </div>
 
         <div className="relative fade-in-up">
-          <div className="absolute -inset-3 -z-10 rounded-3xl bg-gradient-to-br from-primary/15 via-transparent to-gold/20 blur-2xl" />
+          <div className="absolute -inset-3 -z-10 rounded-3xl bg-gradient-to-br from-primary/25 via-primary/10 to-secondary/25 blur-2xl" />
           <div className="relative overflow-hidden rounded-3xl shadow-xl ring-1 ring-black/5">
             <img
               src={heroImg}

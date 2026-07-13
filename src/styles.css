@@ -75,23 +75,23 @@
   --card-foreground: oklch(0.21 0.03 260);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.21 0.03 260);
-  /* Emerald 700-ish */
-  --primary: oklch(0.52 0.13 165);
-  --primary-foreground: oklch(0.99 0.01 160);
-  /* Slate 900 */
-  --secondary: oklch(0.24 0.03 260);
-  --secondary-foreground: oklch(0.98 0.005 260);
-  --muted: oklch(0.97 0.005 250);
-  --muted-foreground: oklch(0.48 0.03 260);
-  --accent: oklch(0.95 0.05 165);
-  --accent-foreground: oklch(0.32 0.08 165);
+  /* Logo crimson (#C02428) */
+  --primary: oklch(0.52 0.20 25);
+  --primary-foreground: oklch(0.99 0.01 25);
+  /* Logo deep plum (#3B1E43) */
+  --secondary: oklch(0.27 0.08 320);
+  --secondary-foreground: oklch(0.98 0.005 320);
+  --muted: oklch(0.97 0.008 320);
+  --muted-foreground: oklch(0.45 0.04 320);
+  --accent: oklch(0.95 0.04 25);
+  --accent-foreground: oklch(0.32 0.12 25);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.92 0.01 250);
-  --input: oklch(0.92 0.01 250);
-  --ring: oklch(0.52 0.13 165);
-  --surface-soft: oklch(0.985 0.005 250);
-  --surface-tint: oklch(0.965 0.008 250);
+  --border: oklch(0.92 0.015 320);
+  --input: oklch(0.92 0.015 320);
+  --ring: oklch(0.52 0.20 25);
+  --surface-soft: oklch(0.985 0.006 320);
+  --surface-tint: oklch(0.965 0.01 320);
   --gold: oklch(0.82 0.13 82);
   --gold-foreground: oklch(0.35 0.08 70);
   --chart-1: oklch(0.646 0.222 41.116);
