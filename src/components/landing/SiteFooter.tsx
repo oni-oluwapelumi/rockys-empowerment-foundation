@@ -14,8 +14,8 @@ export function SiteFooter() {
           <img
             src={logo}
             alt="Rocky's Empowerment Foundation seal"
-            className="h-32 w-32 sm:h-36 sm:w-36 object-contain"
-            style={{ height: "140px", width: "140px" }}
+            className="object-contain -ml-4 sm:-ml-6"
+            style={{ height: "240px", width: "auto" }}
           />
 
           <div className="max-w-3xl">

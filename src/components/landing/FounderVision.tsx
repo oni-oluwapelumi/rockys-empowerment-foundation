@@ -36,17 +36,14 @@ export function FounderVision() {
                 self-reliance for every individual we encounter."
               </blockquote>
             </div>
-            <div className="mt-8 flex items-center gap-4">
-              <div className="h-px w-12 bg-primary" />
-              <div>
-                <p className="font-display text-lg font-semibold text-secondary">
-                  Oluwatoyin Alonge
-                </p>
-                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground">
-                  Founder — Rocky's Empowerment Foundation
-                </p>
-              </div>
-            </div>
+            <figcaption className="mt-10 border-l-2 border-primary pl-5">
+              <p className="font-display text-xl font-semibold text-secondary">
+                Oluwatoyin Alonge
+              </p>
+              <p className="mt-1 text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+                Founder — Rocky's Empowerment Foundation
+              </p>
+            </figcaption>
           </div>
         </div>
       </div>
