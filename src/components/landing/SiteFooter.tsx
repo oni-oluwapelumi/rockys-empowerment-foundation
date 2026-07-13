@@ -5,8 +5,8 @@ export function SiteFooter() {
   return (
     <footer
       id="contact"
-      className="scroll-mt-20 text-slate-200"
-      style={{ backgroundColor: "#1E293B" }}
+      className="scroll-mt-20 text-slate-100"
+      style={{ backgroundColor: "#2A1530" }}
     >
       <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8 sm:py-20">
         <div className="flex flex-col items-start gap-8">
