@@ -73,9 +73,11 @@ export function Pillars() {
           {pillars.map(({ icon: Icon, title, description, items }, i) => (
             <article
               key={title}
-              className="bg-white p-8 lg:p-10 transition-colors duration-300 hover:bg-surface-warm group"
+              data-reveal
+              style={{ transitionDelay: `${i * 80}ms` }}
+              className="reveal lift bg-white p-8 lg:p-10 hover:bg-surface-warm hover:shadow-xl group"
             >
-              <div className="text-secondary mb-8 transition-colors group-hover:text-primary">
+              <div className="text-secondary mb-8 transition-all duration-500 group-hover:text-primary group-hover:-translate-y-1 group-hover:rotate-[-4deg]">
                 <Icon className="h-10 w-10" strokeWidth={1.5} />
               </div>
               <p className="text-xs font-bold uppercase tracking-wider text-primary/70 mb-1">

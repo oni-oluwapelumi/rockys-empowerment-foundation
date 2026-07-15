@@ -5,7 +5,7 @@ export function FounderVision() {
     <section id="vision" className="scroll-mt-20 bg-secondary py-24 sm:py-32 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
-          <div className="relative">
+          <div data-reveal className="reveal relative">
             <div className="aspect-[4/5] relative z-10 overflow-hidden rounded-sm">
               <img
                 src={founderAsset.url}
@@ -23,7 +23,7 @@ export function FounderVision() {
             </div>
           </div>
 
-          <div className="lg:pl-10">
+          <div data-reveal style={{ transitionDelay: "120ms" }} className="reveal lg:pl-10">
             <h2 className="font-display text-4xl font-bold mb-8 leading-tight text-white">
               A Vision for Radical Compassion
             </h2>

@@ -220,7 +220,7 @@ export function Engage() {
   return (
     <section id="engage" className="scroll-mt-20 bg-surface-warm py-20 sm:py-28">
       <div id="program" className="mx-auto max-w-xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
+        <div data-reveal className="reveal text-center mb-12">
           <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary">August 2026 Launchpad</p>
           <h2 className="mt-4 font-display text-3xl font-bold text-secondary sm:text-4xl">
             Become a Part of Our History
@@ -231,7 +231,7 @@ export function Engage() {
           </p>
         </div>
 
-        <div className="bg-white shadow-2xl overflow-hidden">
+        <div data-reveal style={{ transitionDelay: "120ms" }} className="reveal bg-white shadow-2xl overflow-hidden">
           <div className="flex">
             <button
               type="button"
