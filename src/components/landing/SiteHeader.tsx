@@ -54,7 +54,7 @@ export function SiteHeader() {
                 e.preventDefault();
                 scrollTo(l.href);
               }}
-              className="text-xs font-bold uppercase tracking-[0.2em] text-foreground/70 transition-colors hover:text-primary"
+              className="story-link text-xs font-bold uppercase tracking-[0.2em] text-foreground/70 transition-colors hover:text-primary"
             >
               {l.label}
             </a>
