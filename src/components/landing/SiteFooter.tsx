@@ -3,77 +3,78 @@ import logo from "@/assets/logo.png";
 
 export function SiteFooter() {
   return (
-    <footer
-      id="contact"
-      className="scroll-mt-20 text-slate-800"
-      style={{ backgroundColor: "#F5EFE6" }}
-    >
+    <footer id="contact" className="bg-[#F5EFE6] text-secondary">
       <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8 sm:py-20">
-        <div className="flex flex-col items-start gap-8">
-          {/* Prominent seal — NO wrapper, ring, border, or bg */}
+        <div className="flex flex-col items-center gap-10">
           <img
             src={logo}
             alt="Rocky's Empowerment Foundation seal"
-            className="object-contain -ml-4 sm:-ml-6"
+            className="object-contain"
             style={{ height: "240px", width: "auto" }}
           />
 
-          <div className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-              Preamble
-            </p>
-            <p className="mt-3 text-base leading-relaxed text-slate-700">
-              We, the members of ROCKY'S EMPOWERMENT FOUNDATION, a not-for-profit and
-              non-political organisation, do firmly and solemnly resolve to provide for
-              ourselves a constitution and to be governed by the provisions therein contained.
+          <div className="max-w-2xl text-center">
+            <h3 className="font-display text-2xl font-bold sm:text-3xl mb-3">
+              Rocky's Empowerment Foundation
+            </h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              This is a non-profit, non-religious, non-political and non-governmental organization
+              registered to promote the welfare, wellbeing, and empowerment of the vulnerable.
+              The organization is a people-centered intervention focused on breaking cycles of
+              vulnerability and building sustainable, resilient communities.
             </p>
           </div>
 
-          <div className="text-sm text-slate-500">
-            <p>© 2026 Rocky's Empowerment Foundation</p>
-            <p>All rights reserved</p>
+          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8">
+            <a
+              href="mailto:rockyempowermentfoundation@gmail.com"
+              className="text-sm font-semibold underline-offset-4 hover:text-primary hover:underline transition-colors"
+            >
+              rockyempowermentfoundation@gmail.com
+            </a>
+            <span className="hidden sm:block text-border">|</span>
+            <a
+              href="mailto:oluwatoyinalonge@gmail.com"
+              className="text-sm font-semibold underline-offset-4 hover:text-primary hover:underline transition-colors"
+            >
+              oluwatoyinalonge@gmail.com
+            </a>
           </div>
 
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-secondary">
-              Email Address
-            </p>
-            <ul className="mt-3 space-y-1.5 text-sm">
-              <li>
-                <a
-                  href="mailto:info@yourgmail.com"
-                  className="underline underline-offset-4 decoration-slate-400 text-slate-700 transition-colors hover:text-primary hover:decoration-primary"
-                >
-                  info@yourgmail@gmail.com
-                </a>
-              </li>
-              <li>
-                <a
-                  href="mailto:support@yourgmail.com"
-                  className="underline underline-offset-4 decoration-slate-400 text-slate-700 transition-colors hover:text-primary hover:decoration-primary"
-                >
-                  support@yourgmail@gmail.com
-                </a>
-              </li>
-            </ul>
+          <div className="flex items-center gap-6">
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="rounded-full bg-secondary p-3 text-secondary-foreground transition-colors hover:bg-primary hover:text-primary-foreground"
+            >
+              <Instagram className="h-5 w-5" />
+            </a>
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="rounded-full bg-secondary p-3 text-secondary-foreground transition-colors hover:bg-primary hover:text-primary-foreground"
+            >
+              <Linkedin className="h-5 w-5" />
+            </a>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="X (Twitter)"
+              className="rounded-full bg-secondary p-3 text-secondary-foreground transition-colors hover:bg-primary hover:text-primary-foreground"
+            >
+              <Twitter className="h-5 w-5" />
+            </a>
           </div>
 
-          <div className="flex items-center gap-4 pt-2">
-            {[
-              { Icon: Instagram, label: "Instagram", href: "#" },
-              { Icon: Linkedin, label: "LinkedIn", href: "#" },
-              { Icon: Twitter, label: "X", href: "#" },
-            ].map(({ Icon, label, href }) => (
-              <a
-                key={label}
-                href={href}
-                aria-label={label}
-                className="text-secondary transition-colors hover:text-primary"
-              >
-                <Icon className="h-5 w-5" />
-              </a>
-            ))}
-          </div>
+          <div className="h-px w-full bg-border/50" />
+          <p className="text-xs text-muted-foreground">
+            © {new Date().getFullYear()} Rocky's Empowerment Foundation. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

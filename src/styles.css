@@ -60,9 +60,10 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-display: "Playfair Display", ui-serif, Georgia, serif;
   --color-surface-soft: var(--surface-soft);
   --color-surface-tint: var(--surface-tint);
+  --color-surface-warm: var(--surface-warm);
   --color-gold: var(--gold);
   --color-gold-foreground: var(--gold-foreground);
 }
@@ -92,6 +93,7 @@
   --ring: oklch(0.52 0.20 25);
   --surface-soft: oklch(0.985 0.006 320);
   --surface-tint: oklch(0.965 0.01 320);
+  --surface-warm: oklch(0.98 0.008 90);
   --gold: oklch(0.82 0.13 82);
   --gold-foreground: oklch(0.35 0.08 70);
   --chart-1: oklch(0.646 0.222 41.116);
@@ -129,6 +131,7 @@
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.551 0.027 264.364);
+  --surface-warm: oklch(0.2 0.03 300);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);

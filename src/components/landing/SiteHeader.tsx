@@ -6,9 +6,9 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/s
 const links = [
   { href: "#home", label: "Home" },
   { href: "#pillars", label: "Our Pillars" },
-  { href: "#vision", label: "About & Vision" },
-  { href: "#program", label: "Upcoming Program" },
-  { href: "#contact", label: "Contact Us" },
+  { href: "#vision", label: "Founder" },
+  { href: "#program", label: "Launchpad" },
+  { href: "#contact", label: "Contact" },
 ];
 
 function scrollTo(id: string) {
@@ -19,8 +19,8 @@ function scrollTo(id: string) {
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-white/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-white/95 backdrop-blur-sm">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <a
           href="#home"
           onClick={(e) => {
@@ -29,7 +29,7 @@ export function SiteHeader() {
           }}
           className="min-w-0"
         >
-          <span className="truncate font-display text-lg font-bold tracking-tight text-secondary sm:text-xl">
+          <span className="truncate font-display text-xl font-bold tracking-tight text-secondary sm:text-2xl">
             Rocky's Empowerment Foundation
           </span>
         </a>
@@ -43,7 +43,7 @@ export function SiteHeader() {
                 e.preventDefault();
                 scrollTo(l.href);
               }}
-              className="text-sm font-medium text-foreground/70 transition-colors hover:text-primary"
+              className="text-xs font-bold uppercase tracking-[0.2em] text-foreground/70 transition-colors hover:text-primary"
             >
               {l.label}
             </a>
@@ -53,7 +53,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           <Button
             onClick={() => scrollTo("engage")}
-            className="hidden sm:inline-flex bg-primary text-primary-foreground shadow-md transition-transform hover:scale-105 hover:bg-primary/90"
+            className="hidden sm:inline-flex rounded-full bg-primary px-6 text-xs font-bold uppercase tracking-widest text-primary-foreground shadow-md transition-all hover:bg-secondary hover:scale-105"
           >
             <HeartHandshake className="mr-2 h-4 w-4" />
             Get Involved
@@ -86,7 +86,7 @@ export function SiteHeader() {
                     setOpen(false);
                     setTimeout(() => scrollTo("engage"), 150);
                   }}
-                  className="mt-4 bg-primary text-primary-foreground"
+                  className="mt-4 rounded-full bg-primary text-primary-foreground"
                 >
                   <HeartHandshake className="mr-2 h-4 w-4" />
                   Get Involved

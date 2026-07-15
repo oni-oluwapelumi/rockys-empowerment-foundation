@@ -1,4 +1,4 @@
-import { Sparkles, ArrowRight, Compass } from "lucide-react";
+import { ArrowRight, Compass } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroImg from "@/assets/hero-community.jpg";
 
@@ -8,79 +8,57 @@ function scrollTo(id: string) {
 
 export function Hero() {
   return (
-    <section id="home" className="relative overflow-hidden bg-white">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,theme(colors.primary/8%),transparent_60%)]"
-      />
-      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-28">
-        <div className="fade-in-up flex flex-col justify-center">
-          <span className="inline-flex w-fit items-center gap-2 rounded-full bg-gold/20 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-gold-foreground ring-1 ring-gold/40">
-            <Sparkles className="h-3.5 w-3.5" />
-            Inaugural Program Launching August 2026
+    <section id="home" className="relative min-h-[85vh] flex flex-col md:flex-row overflow-hidden">
+      <div className="md:w-3/5 flex items-center justify-center bg-surface-warm px-6 py-16 sm:px-12 md:px-16 lg:px-20 lg:py-24">
+        <div className="max-w-2xl fade-in-up">
+          <span className="text-primary font-bold uppercase tracking-[0.3em] text-xs mb-6 block">
+            Launching August 2026
           </span>
-          <h1 className="mt-6 font-display text-4xl font-bold leading-[1.1] text-secondary sm:text-5xl lg:text-6xl">
+          <h1 className="font-display text-4xl font-bold leading-[1.05] text-secondary sm:text-5xl md:text-6xl lg:text-7xl">
             Empowering Lives, Restoring Hope, and{" "}
-            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              Transforming Communities
-            </span>{" "}
+            <span className="text-primary">Transforming Communities</span>{" "}
             From the Ground Up.
           </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
+          <p className="mt-8 text-lg md:text-xl text-muted-foreground leading-relaxed font-light">
             Rocky's Empowerment Foundation is a dedicated humanitarian initiative focused on
             breaking cycles of vulnerability through structured intervention, continuous relief,
             and sustainable lifecycle support for every family we serve.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-10 flex flex-wrap gap-4">
             <Button
               size="lg"
-              onClick={() => scrollTo("engage")}
-              className="bg-primary text-primary-foreground shadow-lg shadow-primary/20 transition-transform hover:scale-105 hover:bg-primary/90"
+              onClick={() => scrollTo("pillars")}
+              className="rounded-lg bg-secondary px-10 text-sm font-bold text-secondary-foreground shadow-md transition-all hover:bg-primary hover:text-primary-foreground"
             >
-              Join Our First Mission
+              Explore Our Vision
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
             <Button
               size="lg"
               variant="outline"
-              onClick={() => scrollTo("pillars")}
-              className="border-secondary/20 text-secondary transition-transform hover:scale-105 hover:bg-secondary hover:text-secondary-foreground"
+              onClick={() => scrollTo("engage")}
+              className="rounded-lg border-2 border-secondary px-10 text-sm font-bold text-secondary transition-all hover:bg-secondary hover:text-secondary-foreground"
             >
               <Compass className="mr-2 h-4 w-4" />
-              Explore Our Vision
+              Join Our First Mission
             </Button>
           </div>
-          <dl className="mt-12 grid grid-cols-3 gap-6 border-t border-border/60 pt-8">
-            {[
-              { k: "4", v: "Core Pillars" },
-              { k: "24/7", v: "Community Kitchen" },
-              { k: "Aug '26", v: "Inaugural Launch" },
-            ].map((s) => (
-              <div key={s.v}>
-                <dt className="font-display text-2xl font-bold text-primary">{s.k}</dt>
-                <dd className="mt-1 text-xs text-muted-foreground">{s.v}</dd>
-              </div>
-            ))}
-          </dl>
         </div>
+      </div>
 
-        <div className="relative fade-in-up">
-          <div className="absolute -inset-3 -z-10 rounded-3xl bg-gradient-to-br from-primary/25 via-primary/10 to-secondary/25 blur-2xl" />
-          <div className="relative overflow-hidden rounded-3xl shadow-xl ring-1 ring-black/5">
-            <img
-              src={heroImg}
-              alt="Community members and volunteers standing together at sunset"
-              width={1400}
-              height={1400}
-              className="h-full w-full object-cover"
-            />
-          </div>
-          <div className="absolute -bottom-6 -left-6 hidden max-w-xs rounded-2xl border border-border/60 bg-white/95 p-5 shadow-lg backdrop-blur sm:block">
-            <p className="text-xs font-semibold uppercase tracking-wider text-primary">Our Promise</p>
-            <p className="mt-1 text-sm font-medium text-secondary">
-              Restoring dignity through structured relief and lasting self-reliance.
-            </p>
-          </div>
+      <div className="md:w-2/5 relative min-h-[400px] md:min-h-0">
+        <img
+          src={heroImg}
+          alt="Community members and volunteers standing together at sunset"
+          width={1400}
+          height={1400}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute bottom-8 -left-4 xl:-left-20 hidden max-w-xs rounded-sm border-l-4 border-primary bg-white p-6 shadow-2xl backdrop-blur sm:block">
+          <p className="text-sm italic text-muted-foreground leading-relaxed">
+            "We believe in a world where potential isn't limited by circumstance."
+          </p>
+          <p className="mt-3 text-xs font-bold uppercase tracking-widest text-secondary">- Foundation Ethos</p>
         </div>
       </div>
     </section>
