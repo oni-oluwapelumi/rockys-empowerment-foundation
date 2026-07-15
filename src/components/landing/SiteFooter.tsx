@@ -47,7 +47,7 @@ export function SiteFooter() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="rounded-full bg-secondary p-3 text-secondary-foreground transition-colors hover:bg-primary hover:text-primary-foreground"
+              className="rounded-full bg-secondary p-3 text-secondary-foreground transition-all duration-300 hover:bg-primary hover:text-primary-foreground hover:-translate-y-0.5 hover:shadow-lg"
             >
               <Instagram className="h-5 w-5" />
             </a>
@@ -56,7 +56,7 @@ export function SiteFooter() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="rounded-full bg-secondary p-3 text-secondary-foreground transition-colors hover:bg-primary hover:text-primary-foreground"
+              className="rounded-full bg-secondary p-3 text-secondary-foreground transition-all duration-300 hover:bg-primary hover:text-primary-foreground hover:-translate-y-0.5 hover:shadow-lg"
             >
               <Linkedin className="h-5 w-5" />
             </a>
@@ -65,7 +65,7 @@ export function SiteFooter() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="X (Twitter)"
-              className="rounded-full bg-secondary p-3 text-secondary-foreground transition-colors hover:bg-primary hover:text-primary-foreground"
+              className="rounded-full bg-secondary p-3 text-secondary-foreground transition-all duration-300 hover:bg-primary hover:text-primary-foreground hover:-translate-y-0.5 hover:shadow-lg"
             >
               <Twitter className="h-5 w-5" />
             </a>
