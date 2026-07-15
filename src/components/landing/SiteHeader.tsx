@@ -1,14 +1,20 @@
 import { useEffect, useState } from "react";
-import { Menu, HeartHandshake } from "lucide-react";
+import { Menu, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 
+const whatWeDo = [
+  { href: "#pillars", label: "Zero Hunger" },
+  { href: "#pillars", label: "Maternal Care" },
+  { href: "#pillars", label: "Girl-Child Development" },
+  { href: "#pillars", label: "Livelihood & Welfare" },
+];
+
 const links = [
-  { href: "#home", label: "Home" },
-  { href: "#pillars", label: "Our Pillars" },
-  { href: "#vision", label: "Founder" },
-  { href: "#program", label: "Launchpad" },
-  { href: "#contact", label: "Contact" },
+  { href: "#vision", label: "How We Work" },
+  { href: "#pillars", label: "What We Do", dropdown: whatWeDo },
+  { href: "#program", label: "News & Insights" },
+  { href: "#engage", label: "Resources" },
 ];
 
 function scrollTo(id: string) {
@@ -47,27 +53,45 @@ export function SiteHeader() {
 
         <nav className="hidden lg:flex items-center gap-8">
           {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={(e) => {
-                e.preventDefault();
-                scrollTo(l.href);
-              }}
-              className="story-link text-xs font-bold uppercase tracking-[0.2em] text-foreground/70 transition-colors hover:text-primary"
-            >
-              {l.label}
-            </a>
+            <div key={l.label} className="group relative">
+              <a
+                href={l.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollTo(l.href);
+                }}
+                className="story-link inline-flex items-center gap-1 text-xs font-bold uppercase tracking-[0.2em] text-secondary transition-colors hover:text-primary"
+              >
+                {l.label}
+                {l.dropdown && <ChevronDown className="h-3 w-3" />}
+              </a>
+              {l.dropdown && (
+                <div className="invisible absolute left-1/2 top-full z-50 mt-3 w-64 -translate-x-1/2 rounded-lg border border-border/60 bg-white p-2 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
+                  {l.dropdown.map((d) => (
+                    <a
+                      key={d.label}
+                      href={d.href}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollTo(d.href);
+                      }}
+                      className="block rounded-md px-4 py-2.5 text-sm font-medium text-secondary transition-colors hover:bg-muted hover:text-primary"
+                    >
+                      {d.label}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
           ))}
         </nav>
 
         <div className="flex items-center gap-2">
           <Button
             onClick={() => scrollTo("engage")}
-            className="hidden sm:inline-flex rounded-full bg-primary px-6 text-xs font-bold uppercase tracking-widest text-primary-foreground shadow-md transition-all hover:bg-secondary hover:scale-105"
+            className="hidden sm:inline-flex rounded-none bg-transparent px-2 text-xs font-bold uppercase tracking-[0.2em] text-primary shadow-none transition-colors hover:bg-transparent hover:text-secondary"
           >
-            <HeartHandshake className="mr-2 h-4 w-4" />
-            Get Involved
+            Give Now
           </Button>
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild className="lg:hidden">
@@ -79,29 +103,49 @@ export function SiteHeader() {
               <SheetTitle className="font-display text-lg text-secondary">Menu</SheetTitle>
               <nav className="mt-8 flex flex-col gap-1">
                 {links.map((l) => (
-                  <a
-                    key={l.href}
-                    href={l.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setOpen(false);
-                      setTimeout(() => scrollTo(l.href), 150);
-                    }}
-                    className="rounded-md px-4 py-3 text-base font-medium text-foreground transition-colors hover:bg-muted"
-                  >
-                    {l.label}
-                  </a>
+                  <div key={l.label}>
+                    <a
+                      href={l.href}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setOpen(false);
+                        setTimeout(() => scrollTo(l.href), 150);
+                      }}
+                      className="block rounded-md px-4 py-3 text-sm font-bold uppercase tracking-[0.2em] text-secondary transition-colors hover:bg-muted"
+                    >
+                      {l.label}
+                    </a>
+                    {l.dropdown && (
+                      <div className="ml-4 flex flex-col border-l border-border/60 pl-3">
+                        {l.dropdown.map((d) => (
+                          <a
+                            key={d.label}
+                            href={d.href}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setOpen(false);
+                              setTimeout(() => scrollTo(d.href), 150);
+                            }}
+                            className="rounded-md px-3 py-2 text-sm text-foreground/80 transition-colors hover:bg-muted hover:text-primary"
+                          >
+                            {d.label}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 ))}
-                <Button
-                  onClick={() => {
+                <a
+                  href="#engage"
+                  onClick={(e) => {
+                    e.preventDefault();
                     setOpen(false);
                     setTimeout(() => scrollTo("engage"), 150);
                   }}
-                  className="mt-4 rounded-full bg-primary text-primary-foreground"
+                  className="mt-2 rounded-md px-4 py-3 text-sm font-bold uppercase tracking-[0.2em] text-primary hover:bg-muted"
                 >
-                  <HeartHandshake className="mr-2 h-4 w-4" />
-                  Get Involved
-                </Button>
+                  Give Now
+                </a>
               </nav>
             </SheetContent>
           </Sheet>
