@@ -2,17 +2,6 @@ import { useState } from "react";
 import { CheckCircle2, Loader2, Mail, UserPlus } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { toast } from "sonner";
 
 const interests = [
@@ -24,7 +13,7 @@ const interests = [
 
 function SuccessCard({ title, body }: { title: string; body: string }) {
   return (
-    <div className="animate-in fade-in zoom-in-95 duration-500 rounded-2xl border border-primary/30 bg-primary/5 p-8 text-center">
+    <div className="animate-in fade-in zoom-in-95 duration-500 rounded-sm border border-primary/30 bg-primary/5 p-10 text-center">
       <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground">
         <CheckCircle2 className="h-8 w-8" />
       </div>
@@ -77,80 +66,88 @@ function VolunteerForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="grid gap-5">
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <Label htmlFor="full_name">Full Name</Label>
-          <Input
+    <form onSubmit={onSubmit} className="space-y-10">
+      <div className="space-y-8">
+        <div className="relative">
+          <input
             id="full_name"
+            type="text"
             required
-            placeholder="Enter your full name"
             value={form.full_name}
             onChange={(e) => setForm({ ...form, full_name: e.target.value })}
-            className="mt-1.5"
+            className="peer w-full pt-6 pb-2 bg-transparent border-b-2 border-border text-secondary focus:border-primary outline-none transition-colors"
+            placeholder=" "
           />
+          <label htmlFor="full_name" className="absolute left-0 top-0 text-[10px] font-bold uppercase text-muted-foreground tracking-widest transition-colors peer-focus:text-primary">
+            Full Name
+          </label>
         </div>
-        <div>
-          <Label htmlFor="email">Email Address</Label>
-          <Input
+        <div className="relative">
+          <input
             id="email"
             type="email"
             required
-            placeholder="Enter your email address"
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
-            className="mt-1.5"
+            className="peer w-full pt-6 pb-2 bg-transparent border-b-2 border-border text-secondary focus:border-primary outline-none transition-colors"
+            placeholder=" "
           />
+          <label htmlFor="email" className="absolute left-0 top-0 text-[10px] font-bold uppercase text-muted-foreground tracking-widest transition-colors peer-focus:text-primary">
+            Email Address
+          </label>
         </div>
-      </div>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <Label htmlFor="phone_number">Phone Number</Label>
-          <Input
+        <div className="relative">
+          <input
             id="phone_number"
             type="tel"
             required
-            placeholder="Enter your mobile number"
             value={form.phone_number}
             onChange={(e) => setForm({ ...form, phone_number: e.target.value })}
-            className="mt-1.5"
+            className="peer w-full pt-6 pb-2 bg-transparent border-b-2 border-border text-secondary focus:border-primary outline-none transition-colors"
+            placeholder=" "
           />
+          <label htmlFor="phone_number" className="absolute left-0 top-0 text-[10px] font-bold uppercase text-muted-foreground tracking-widest transition-colors peer-focus:text-primary">
+            Phone Number
+          </label>
         </div>
-        <div>
-          <Label htmlFor="area">Primary Area of Interest</Label>
-          <Select
+        <div className="relative">
+          <select
+            id="area"
+            required
             value={form.area_of_interest}
-            onValueChange={(v) => setForm({ ...form, area_of_interest: v })}
+            onChange={(e) => setForm({ ...form, area_of_interest: e.target.value })}
+            className="peer w-full pt-6 pb-2 bg-transparent border-b-2 border-border text-secondary focus:border-primary outline-none transition-colors"
           >
-            <SelectTrigger id="area" className="mt-1.5">
-              <SelectValue placeholder="Choose a pillar" />
-            </SelectTrigger>
-            <SelectContent>
-              {interests.map((i) => (
-                <SelectItem key={i} value={i}>
-                  {i}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            <option value="" disabled></option>
+            {interests.map((i) => (
+              <option key={i} value={i}>
+                {i}
+              </option>
+            ))}
+          </select>
+          <label htmlFor="area" className="absolute left-0 top-0 text-[10px] font-bold uppercase text-muted-foreground tracking-widest transition-colors peer-focus:text-primary">
+            Primary Area of Interest
+          </label>
         </div>
-      </div>
-      <div>
-        <Label htmlFor="message">Message / Notes (optional)</Label>
-        <Textarea
-          id="message"
-          rows={4}
-          placeholder="Tell us briefly how you would like to help"
-          value={form.message}
-          onChange={(e) => setForm({ ...form, message: e.target.value })}
-          className="mt-1.5"
-        />
+        <div className="relative">
+          <textarea
+            id="message"
+            rows={3}
+            value={form.message}
+            onChange={(e) => setForm({ ...form, message: e.target.value })}
+            className="peer w-full pt-6 pb-2 bg-transparent border-b-2 border-border text-secondary focus:border-primary outline-none transition-colors resize-none"
+            placeholder=" "
+          />
+          <label htmlFor="message" className="absolute left-0 top-0 text-[10px] font-bold uppercase text-muted-foreground tracking-widest transition-colors peer-focus:text-primary">
+            Message / Notes (optional)
+          </label>
+        </div>
       </div>
       <Button
         type="submit"
         size="lg"
         disabled={pending}
-        className="w-full bg-primary text-primary-foreground shadow-lg shadow-primary/20 transition-transform hover:scale-[1.02] hover:bg-primary/90"
+        className="w-full rounded-sm bg-primary py-5 text-xs font-bold uppercase tracking-[0.3em] text-primary-foreground shadow-lg transition-all hover:bg-secondary hover:text-secondary-foreground"
       >
         {pending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
         Submit Volunteer Application
@@ -189,24 +186,26 @@ function NewsletterForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="grid gap-5">
-      <div>
-        <Label htmlFor="news_email">Email Address</Label>
-        <Input
+    <form onSubmit={onSubmit} className="space-y-10">
+      <div className="relative">
+        <input
           id="news_email"
           type="email"
           required
-          placeholder="Enter your best email address to receive early updates"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="mt-1.5"
+          className="peer w-full pt-6 pb-2 bg-transparent border-b-2 border-border text-secondary focus:border-primary outline-none transition-colors"
+          placeholder=" "
         />
+        <label htmlFor="news_email" className="absolute left-0 top-0 text-[10px] font-bold uppercase text-muted-foreground tracking-widest transition-colors peer-focus:text-primary">
+          Email Address
+        </label>
       </div>
       <Button
         type="submit"
         size="lg"
         disabled={pending}
-        className="w-full bg-secondary text-secondary-foreground shadow-lg transition-transform hover:scale-[1.02] hover:bg-secondary/90"
+        className="w-full rounded-sm bg-secondary py-5 text-xs font-bold uppercase tracking-[0.3em] text-secondary-foreground shadow-lg transition-all hover:bg-primary hover:text-primary-foreground"
       >
         {pending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
         Subscribe to Launch Updates
@@ -216,43 +215,52 @@ function NewsletterForm() {
 }
 
 export function Engage() {
+  const [tab, setTab] = useState<"volunteer" | "newsletter">("volunteer");
+
   return (
-    <section id="engage" className="scroll-mt-20 bg-surface-tint py-20 sm:py-28">
-      <div id="program" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-            August 2026 Launchpad
-          </p>
-          <h2 className="mt-4 font-display text-3xl font-bold text-secondary sm:text-4xl lg:text-5xl">
+    <section id="engage" className="scroll-mt-20 bg-surface-warm py-20 sm:py-28">
+      <div id="program" className="mx-auto max-w-xl px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary">August 2026 Launchpad</p>
+          <h2 className="mt-4 font-display text-3xl font-bold text-secondary sm:text-4xl">
             Become a Part of Our History
           </h2>
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+          <p className="mt-4 text-muted-foreground leading-relaxed">
             Our inaugural program kicks off next month. We are actively gathering the core
             support system of change-makers who will carry this mission forward.
           </p>
         </div>
 
-        <div className="mt-12 rounded-3xl border border-border/60 bg-white p-6 shadow-xl sm:p-10">
-          <Tabs defaultValue="volunteer" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 h-auto bg-muted/60 p-1">
-              <TabsTrigger value="volunteer" className="py-2.5 gap-2 data-[state=active]:bg-white data-[state=active]:shadow">
-                <UserPlus className="h-4 w-4" />
-                <span className="hidden sm:inline">Become a Volunteer</span>
-                <span className="sm:hidden">Volunteer</span>
-              </TabsTrigger>
-              <TabsTrigger value="newsletter" className="py-2.5 gap-2 data-[state=active]:bg-white data-[state=active]:shadow">
-                <Mail className="h-4 w-4" />
-                <span className="hidden sm:inline">Stay Updated</span>
-                <span className="sm:hidden">Newsletter</span>
-              </TabsTrigger>
-            </TabsList>
-            <TabsContent value="volunteer" className="mt-8">
-              <VolunteerForm />
-            </TabsContent>
-            <TabsContent value="newsletter" className="mt-8">
-              <NewsletterForm />
-            </TabsContent>
-          </Tabs>
+        <div className="bg-white shadow-2xl overflow-hidden">
+          <div className="flex">
+            <button
+              type="button"
+              onClick={() => setTab("volunteer")}
+              className={`flex-1 py-5 flex items-center justify-center gap-2 font-bold text-xs uppercase tracking-widest transition-all ${
+                tab === "volunteer"
+                  ? "bg-white border-b-4 border-primary text-secondary"
+                  : "bg-muted/40 border-b border-border text-muted-foreground hover:text-secondary"
+              }`}
+            >
+              <UserPlus className="h-4 w-4" />
+              Volunteer
+            </button>
+            <button
+              type="button"
+              onClick={() => setTab("newsletter")}
+              className={`flex-1 py-5 flex items-center justify-center gap-2 font-bold text-xs uppercase tracking-widest transition-all ${
+                tab === "newsletter"
+                  ? "bg-white border-b-4 border-primary text-secondary"
+                  : "bg-muted/40 border-b border-border text-muted-foreground hover:text-secondary"
+              }`}
+            >
+              <Mail className="h-4 w-4" />
+              Newsletter
+            </button>
+          </div>
+          <div className="p-8 sm:p-12">
+            {tab === "volunteer" ? <VolunteerForm /> : <NewsletterForm />}
+          </div>
         </div>
       </div>
     </section>
