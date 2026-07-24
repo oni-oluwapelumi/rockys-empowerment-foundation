@@ -37,19 +37,18 @@ function LinkedInIcon({ className }: { className?: string }) {
 export function SiteFooter() {
   return (
     <footer id="contact" className="bg-[#F5EFE6] text-secondary">
-      <div className="mx-auto max-w-7xl px-6 py-16 sm:px-8 sm:py-20">
-        <div className="flex flex-col items-center gap-10">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-8 sm:py-16">
+        <div className="flex flex-col items-center gap-7 sm:gap-10">
           <img
             src={logo}
             alt="Rocky's Empowerment Foundation seal"
-            className="object-contain"
-            style={{ height: "240px", width: "auto" }}
+            className="h-28 w-auto object-contain sm:h-44"
           />
 
-          <div className="grid w-full max-w-5xl gap-6 md:grid-cols-[1.35fr_0.65fr]">
-            <section className="rounded-3xl border border-secondary/10 bg-white/55 p-7 text-center shadow-sm backdrop-blur-sm sm:p-9 md:text-left">
-              <h3 className="font-display text-2xl font-bold sm:text-3xl">About Us</h3>
-              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+          <div className="grid w-full max-w-5xl gap-4 sm:gap-6 md:grid-cols-[1.35fr_0.65fr]">
+            <section className="rounded-2xl border border-secondary/10 bg-white/55 p-5 text-center shadow-sm backdrop-blur-sm sm:rounded-3xl sm:p-9 md:text-left">
+              <h3 className="font-display text-xl font-bold sm:text-3xl">About Us</h3>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground sm:mt-4 sm:leading-relaxed">
                 Rocky&apos;s Empowerment Foundation (REF) is a faith-driven, non-profit charitable
                 organization dedicated to empowering individuals, strengthening families, and
                 transforming communities through education, healthcare, youth empowerment,
@@ -57,28 +56,33 @@ export function SiteFooter() {
               </p>
             </section>
 
-            <section className="rounded-3xl bg-secondary p-7 text-center text-secondary-foreground shadow-xl sm:p-9 md:text-left">
+            <section className="rounded-2xl bg-secondary p-5 text-center text-secondary-foreground shadow-xl sm:rounded-3xl sm:p-9 md:text-left">
               <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-primary">
                 Get in touch
               </p>
-              <h3 className="mt-3 font-display text-2xl font-bold">Contact Us</h3>
+              <h3 className="mt-2 font-display text-xl font-bold sm:mt-3 sm:text-2xl">
+                Contact Us
+              </h3>
               <a
                 href="mailto:rockyempowermentfoundation@gmail.com"
-                className="mt-6 inline-flex max-w-full items-center gap-3 break-all text-sm font-semibold text-white/80 underline-offset-4 transition-colors hover:text-primary hover:underline"
+                className="mt-4 inline-flex max-w-full items-start justify-center gap-2 text-xs font-semibold leading-5 text-white/80 underline-offset-4 transition-colors hover:text-primary hover:underline sm:mt-6 sm:gap-3 sm:text-sm md:justify-start"
               >
-                <Mail className="h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
-                rockyempowermentfoundation@gmail.com
+                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary sm:h-5 sm:w-5" aria-hidden="true" />
+                <span>
+                  rockyempowermentfoundation
+                  <span className="block sm:inline">@gmail.com</span>
+                </span>
               </a>
             </section>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="grid w-full max-w-sm grid-cols-6 justify-items-center gap-2 sm:flex sm:w-auto sm:max-w-none sm:items-center sm:gap-6">
             <a
               href="https://www.facebook.com/share/1Fn3Pj5peg/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
-              className="rounded-full bg-secondary p-3 text-secondary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary hover:text-primary-foreground hover:shadow-lg"
+              className="rounded-full bg-secondary p-2.5 text-secondary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary hover:text-primary-foreground hover:shadow-lg sm:p-3"
             >
               <FacebookIcon className="h-5 w-5" />
             </a>
@@ -87,7 +91,7 @@ export function SiteFooter() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="X"
-              className="rounded-full bg-secondary p-3 text-secondary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary hover:text-primary-foreground hover:shadow-lg"
+              className="rounded-full bg-secondary p-2.5 text-secondary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary hover:text-primary-foreground hover:shadow-lg sm:p-3"
             >
               <TwitterIcon className="h-5 w-5" />
             </a>
@@ -96,7 +100,7 @@ export function SiteFooter() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="rounded-full bg-secondary p-3 text-secondary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary hover:text-primary-foreground hover:shadow-lg"
+              className="rounded-full bg-secondary p-2.5 text-secondary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary hover:text-primary-foreground hover:shadow-lg sm:p-3"
             >
               <LinkedInIcon className="h-5 w-5" />
             </a>
@@ -105,7 +109,7 @@ export function SiteFooter() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="TikTok"
-              className="rounded-full bg-secondary p-3 text-secondary-foreground transition-all duration-300 hover:bg-primary hover:text-primary-foreground hover:-translate-y-0.5 hover:shadow-lg"
+              className="rounded-full bg-secondary p-2.5 text-secondary-foreground transition-all duration-300 hover:bg-primary hover:text-primary-foreground hover:-translate-y-0.5 hover:shadow-lg sm:p-3"
             >
               <TikTokIcon className="h-5 w-5" />
             </a>
@@ -114,7 +118,7 @@ export function SiteFooter() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="rounded-full bg-secondary p-3 text-secondary-foreground transition-all duration-300 hover:bg-primary hover:text-primary-foreground hover:-translate-y-0.5 hover:shadow-lg"
+              className="rounded-full bg-secondary p-2.5 text-secondary-foreground transition-all duration-300 hover:bg-primary hover:text-primary-foreground hover:-translate-y-0.5 hover:shadow-lg sm:p-3"
             >
               <Instagram className="h-5 w-5" />
             </a>
@@ -123,7 +127,7 @@ export function SiteFooter() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="YouTube"
-              className="rounded-full bg-secondary p-3 text-secondary-foreground transition-all duration-300 hover:bg-primary hover:text-primary-foreground hover:-translate-y-0.5 hover:shadow-lg"
+              className="rounded-full bg-secondary p-2.5 text-secondary-foreground transition-all duration-300 hover:bg-primary hover:text-primary-foreground hover:-translate-y-0.5 hover:shadow-lg sm:p-3"
             >
               <Youtube className="h-5 w-5" />
             </a>
@@ -132,7 +136,7 @@ export function SiteFooter() {
           <div className="h-px w-full bg-border/50" />
           <nav
             aria-label="Legal"
-            className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs font-semibold text-muted-foreground"
+            className="flex flex-col items-center justify-center gap-2 text-xs font-semibold text-muted-foreground sm:flex-row sm:flex-wrap sm:gap-x-5"
           >
             <Link to="/privacy" className="transition-colors hover:text-primary">
               Privacy Policy
@@ -144,9 +148,9 @@ export function SiteFooter() {
               Donation &amp; Refund Policy
             </Link>
           </nav>
-          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-muted-foreground">
+          <div className="flex flex-col items-center justify-center gap-2 text-center text-xs leading-5 text-muted-foreground sm:flex-row sm:flex-wrap sm:gap-x-3">
             <p>© {new Date().getFullYear()} Rocky's Empowerment Foundation. All rights reserved.</p>
-            <span aria-hidden="true">·</span>
+            <span className="hidden sm:inline" aria-hidden="true">·</span>
             <Link
               to="/admin"
               className="inline-flex items-center gap-1.5 font-semibold transition-colors hover:text-primary"

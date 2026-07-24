@@ -34,8 +34,8 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-10 px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="flex shrink-0 items-center gap-3 pr-4">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-2 px-3 sm:gap-6 sm:px-6 lg:gap-10 lg:px-8">
+        <Link to="/" className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3 sm:pr-4 xl:flex-none">
           <span className="relative h-16 w-16 shrink-0 overflow-hidden sm:h-[4.5rem] sm:w-[4.5rem]">
             <img
               src={logo}
@@ -43,11 +43,11 @@ export function SiteHeader() {
               className="absolute left-[-5.5rem] top-[-1.25rem] w-[15.625rem] max-w-none sm:left-[-6.3125rem] sm:top-[-1.375rem] sm:w-[17.5rem]"
             />
           </span>
-          <span className="flex flex-col">
-            <span className="font-display text-lg font-bold leading-tight tracking-tight text-secondary sm:text-xl xl:text-2xl">
+          <span className="flex min-w-0 flex-col">
+            <span className="font-display text-sm font-bold leading-tight tracking-tight text-secondary min-[420px]:text-base sm:text-xl xl:text-2xl">
               Rocky's Empowerment Foundation
             </span>
-            <span className="mt-1 text-[0.65rem] font-semibold tracking-[0.08em] text-primary sm:text-xs">
+            <span className="mt-1 text-[0.5rem] font-semibold leading-tight tracking-[0.04em] text-primary min-[420px]:text-[0.6rem] sm:text-xs sm:tracking-[0.08em]">
               Faith in Action. Sustainable Community Impact.
             </span>
           </span>
@@ -97,7 +97,7 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
           <Button
             asChild
             variant="outline"
