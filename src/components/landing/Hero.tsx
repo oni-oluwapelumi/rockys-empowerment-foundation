@@ -59,7 +59,7 @@ export function Hero() {
           height={1400}
           className="home-hero-image absolute inset-0 h-full w-full object-cover"
         />
-        <div className="home-hero-quote absolute bottom-8 -left-4 xl:-left-20 hidden max-w-xs rounded-xl border-l-4 border-primary bg-white/90 p-6 shadow-2xl backdrop-blur sm:block">
+        <div className="home-hero-quote absolute bottom-4 left-4 right-4 max-w-none rounded-xl border-l-4 border-primary bg-white/90 p-4 shadow-2xl backdrop-blur sm:bottom-8 sm:left-4 sm:right-auto sm:max-w-xs sm:p-6 xl:-left-20">
           <p className="text-sm italic text-muted-foreground leading-relaxed">
             "We believe in a world where potential isn't limited by circumstance."
           </p>
