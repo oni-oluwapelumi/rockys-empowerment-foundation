@@ -44,7 +44,7 @@ export function SiteHeader() {
             />
           </span>
           <span className="flex min-w-0 flex-col">
-            <span className="font-display text-sm font-bold leading-tight tracking-tight text-secondary min-[420px]:text-base sm:text-xl xl:text-2xl">
+            <span className="font-display text-base font-bold leading-tight tracking-tight text-secondary sm:text-xl xl:text-2xl">
               Rocky's Empowerment Foundation
             </span>
             <span className="mt-1 text-[0.5rem] font-semibold leading-tight tracking-[0.04em] text-primary min-[420px]:text-[0.6rem] sm:text-xs sm:tracking-[0.08em]">
@@ -163,13 +163,13 @@ export function SiteHeader() {
                     )}
                   </div>
                 ))}
-                <a
-                  href="/upcoming-programs"
+                <Link
+                  to="/donate"
                   onClick={() => setOpen(false)}
-                  className="mt-2 rounded-md px-4 py-3 text-sm font-bold uppercase tracking-[0.2em] text-secondary hover:bg-muted"
+                  className="mt-4 flex items-center justify-center rounded-md bg-primary px-4 py-3 text-sm font-bold uppercase tracking-[0.2em] text-primary-foreground transition-colors hover:bg-secondary"
                 >
-                  Programs
-                </a>
+                  Donate
+                </Link>
               </nav>
             </SheetContent>
           </Sheet>

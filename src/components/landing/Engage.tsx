@@ -193,7 +193,7 @@ function VolunteerForm() {
         size="lg"
         className="w-full rounded-sm bg-primary py-5 text-xs font-bold uppercase tracking-[0.3em] text-primary-foreground shadow-lg transition-all hover:bg-secondary hover:text-secondary-foreground"
       >
-        Submit Volunteer Application
+        Submit
       </Button>
     </form>
   );
