@@ -78,18 +78,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      {
+        httpEquiv: "Content-Security-Policy",
+        content:
+          "default-src 'self'; form-action 'self' https://checkout.flutterwave.com; img-src 'self' data: blob:; font-src 'self' data: https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://checkout.flutterwave.com; script-src-elem 'self' 'unsafe-inline' https://checkout.flutterwave.com; frame-src 'self' https://checkout.flutterwave.com https://*.flutterwave.com; connect-src 'self' https://checkout.flutterwave.com https://*.flutterwave.com https://psqguzafdgeophzfchfk.supabase.co wss://psqguzafdgeophzfchfk.supabase.co;",
+      },
       { title: "Rocky's Empowerment Foundation — Empowering Lives, Restoring Hope" },
       {
         name: "description",
         content:
-          "A not-for-profit humanitarian foundation delivering community relief, medical aid, maternal support, and youth empowerment. Inaugural program launching August 2026.",
+          "A not-for-profit humanitarian foundation delivering community relief, medical aid, maternal support, and sustainable empowerment.",
       },
       { name: "author", content: "Rocky's Empowerment Foundation" },
       { property: "og:title", content: "Rocky's Empowerment Foundation" },
       {
         property: "og:description",
         content:
-          "Immediate relief, maternal care, girl-child education, and sustainable social development. Join our inaugural program launching August 2026.",
+          "Immediate relief, maternal care, and sustainable social development for vulnerable communities.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

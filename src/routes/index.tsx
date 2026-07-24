@@ -4,6 +4,7 @@ import { Hero } from "@/components/landing/Hero";
 import { Pillars } from "@/components/landing/Pillars";
 import { FounderVision } from "@/components/landing/FounderVision";
 import { Engage } from "@/components/landing/Engage";
+import { Transparency } from "@/components/landing/Transparency";
 import { SiteFooter } from "@/components/landing/SiteFooter";
 import { useReveal } from "@/hooks/use-reveal";
 
@@ -20,6 +21,7 @@ function Index() {
         <Hero />
         <Pillars />
         <FounderVision />
+        <Transparency />
         <Engage />
       </main>
       <SiteFooter />
