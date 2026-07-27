@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/landing/SiteHeader";
 import { Hero } from "@/components/landing/Hero";
+import { FeaturedProgram } from "@/components/landing/FeaturedProgram";
 import { Pillars } from "@/components/landing/Pillars";
 import { FounderVision } from "@/components/landing/FounderVision";
 import { Engage } from "@/components/landing/Engage";
@@ -19,6 +20,7 @@ function Index() {
       <SiteHeader />
       <main>
         <Hero />
+        <FeaturedProgram />
         <Pillars />
         <FounderVision />
         <Transparency />
