@@ -31,9 +31,10 @@ function AboutPage() {
               Compassion expressed through practical action.
             </h1>
             <p className="mt-8 max-w-3xl text-lg leading-relaxed text-white/75">
-              Rocky&apos;s Empowerment Foundation is a Nigerian non-profit, faith-inspired,
-              non-political and non-governmental charitable organization established to serve
-              vulnerable people with dignity, opportunity and sustainable support.
+              Rocky&apos;s Empowerment Foundation (REF) is a faith-driven, non-profit charitable
+              organization dedicated to empowering individuals, strengthening families, and
+              transforming communities through education, healthcare, youth empowerment,
+              humanitarian assistance, and sustainable community development.
             </p>
           </div>
         </header>

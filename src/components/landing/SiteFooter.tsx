@@ -45,39 +45,25 @@ export function SiteFooter() {
             className="h-28 w-auto object-contain sm:h-44"
           />
 
-          <div className="grid w-full max-w-5xl gap-4 sm:gap-6 md:grid-cols-[1.35fr_0.65fr]">
-            <section className="rounded-2xl border border-secondary/10 bg-white/55 p-5 text-center shadow-sm backdrop-blur-sm sm:rounded-3xl sm:p-9 md:text-left">
-              <h3 className="font-display text-xl font-bold sm:text-3xl">About Us</h3>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground sm:mt-4 sm:leading-relaxed">
-                Rocky&apos;s Empowerment Foundation (REF) is a faith-driven, non-profit charitable
-                organization dedicated to empowering individuals, strengthening families, and
-                transforming communities through education, healthcare, youth empowerment,
-                humanitarian assistance, and sustainable community development.
-              </p>
-            </section>
-
-            <section className="rounded-2xl bg-secondary p-5 text-center text-secondary-foreground shadow-xl sm:rounded-3xl sm:p-9 md:text-left">
-              <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-primary">
-                Get in touch
-              </p>
-              <h3 className="mt-2 font-display text-xl font-bold sm:mt-3 sm:text-2xl">
-                Contact Us
-              </h3>
-              <a
-                href="mailto:rockyempowermentfoundation@gmail.com"
-                className="mt-4 inline-flex max-w-full items-start justify-center gap-2 text-xs font-semibold leading-5 text-white/80 underline-offset-4 transition-colors hover:text-primary hover:underline sm:mt-6 sm:gap-3 sm:text-sm md:justify-start"
-              >
-                <Mail
-                  className="mt-0.5 h-4 w-4 shrink-0 text-primary sm:h-5 sm:w-5"
-                  aria-hidden="true"
-                />
-                <span>
-                  rockyempowermentfoundation
-                  <span className="block sm:inline">@gmail.com</span>
-                </span>
-              </a>
-            </section>
-          </div>
+          <section className="w-full max-w-xl rounded-2xl bg-secondary p-5 text-center text-secondary-foreground shadow-xl sm:rounded-3xl sm:p-9">
+            <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-primary">
+              Get in touch
+            </p>
+            <h3 className="mt-2 font-display text-xl font-bold sm:mt-3 sm:text-2xl">Contact Us</h3>
+            <a
+              href="mailto:rockyempowermentfoundation@gmail.com"
+              className="mt-4 inline-flex max-w-full items-start justify-center gap-2 text-xs font-semibold leading-5 text-white/80 underline-offset-4 transition-colors hover:text-primary hover:underline sm:mt-6 sm:gap-3 sm:text-sm"
+            >
+              <Mail
+                className="mt-0.5 h-4 w-4 shrink-0 text-primary sm:h-5 sm:w-5"
+                aria-hidden="true"
+              />
+              <span>
+                rockyempowermentfoundation
+                <span className="block sm:inline">@gmail.com</span>
+              </span>
+            </a>
+          </section>
 
           <div className="grid w-full max-w-sm grid-cols-6 justify-items-center gap-2 sm:flex sm:w-auto sm:max-w-none sm:items-center sm:gap-6">
             <a
