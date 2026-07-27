@@ -13,6 +13,7 @@ const whatWeDo = [
 ];
 
 const links = [
+  { href: "/about", label: "About", page: true },
   { href: "/leadership", label: "OUR TEAM", page: true },
   { href: "#vision", label: "How We Work" },
   { href: "#pillars", label: "What We Do", dropdown: whatWeDo },
@@ -35,7 +36,10 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-2 px-3 sm:gap-6 sm:px-6 lg:gap-10 lg:px-8">
-        <Link to="/" className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3 sm:pr-4 xl:flex-none">
+        <Link
+          to="/"
+          className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3 sm:pr-4 xl:flex-none"
+        >
           <span className="relative h-16 w-16 shrink-0 overflow-hidden sm:h-[4.5rem] sm:w-[4.5rem]">
             <img
               src={logo}

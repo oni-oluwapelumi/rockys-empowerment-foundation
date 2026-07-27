@@ -67,7 +67,10 @@ export function SiteFooter() {
                 href="mailto:rockyempowermentfoundation@gmail.com"
                 className="mt-4 inline-flex max-w-full items-start justify-center gap-2 text-xs font-semibold leading-5 text-white/80 underline-offset-4 transition-colors hover:text-primary hover:underline sm:mt-6 sm:gap-3 sm:text-sm md:justify-start"
               >
-                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary sm:h-5 sm:w-5" aria-hidden="true" />
+                <Mail
+                  className="mt-0.5 h-4 w-4 shrink-0 text-primary sm:h-5 sm:w-5"
+                  aria-hidden="true"
+                />
                 <span>
                   rockyempowermentfoundation
                   <span className="block sm:inline">@gmail.com</span>
@@ -138,6 +141,9 @@ export function SiteFooter() {
             aria-label="Legal"
             className="flex flex-col items-center justify-center gap-2 text-xs font-semibold text-muted-foreground sm:flex-row sm:flex-wrap sm:gap-x-5"
           >
+            <Link to="/about" className="transition-colors hover:text-primary">
+              About &amp; Registration
+            </Link>
             <Link to="/privacy" className="transition-colors hover:text-primary">
               Privacy Policy
             </Link>
@@ -150,7 +156,9 @@ export function SiteFooter() {
           </nav>
           <div className="flex flex-col items-center justify-center gap-2 text-center text-xs leading-5 text-muted-foreground sm:flex-row sm:flex-wrap sm:gap-x-3">
             <p>© {new Date().getFullYear()} Rocky's Empowerment Foundation. All rights reserved.</p>
-            <span className="hidden sm:inline" aria-hidden="true">·</span>
+            <span className="hidden sm:inline" aria-hidden="true">
+              ·
+            </span>
             <Link
               to="/admin"
               className="inline-flex items-center gap-1.5 font-semibold transition-colors hover:text-primary"

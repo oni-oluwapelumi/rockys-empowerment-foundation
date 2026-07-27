@@ -5,6 +5,7 @@ import { Pillars } from "@/components/landing/Pillars";
 import { FounderVision } from "@/components/landing/FounderVision";
 import { Engage } from "@/components/landing/Engage";
 import { Transparency } from "@/components/landing/Transparency";
+import { TrustCredentials } from "@/components/landing/TrustCredentials";
 import { SiteFooter } from "@/components/landing/SiteFooter";
 import { useReveal } from "@/hooks/use-reveal";
 
@@ -19,6 +20,7 @@ function Index() {
       <SiteHeader />
       <main>
         <Hero />
+        <TrustCredentials />
         <Pillars />
         <FounderVision />
         <Transparency />
