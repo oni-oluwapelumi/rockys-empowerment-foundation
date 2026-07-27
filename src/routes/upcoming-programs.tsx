@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CalendarDays, GraduationCap, HeartHandshake } from "lucide-react";
+import { CalendarDays, GraduationCap, HeartHandshake, MapPin, Sparkles } from "lucide-react";
 import { SiteFooter } from "@/components/landing/SiteFooter";
 import { SiteHeader } from "@/components/landing/SiteHeader";
 import { type Program, supabase } from "@/lib/supabase";
 import backToSchoolGraphic from "@/assets/back-to-school-2026.jpeg";
+import dopGraphic from "@/assets/i-am-dop-2026.png";
 
 export const Route = createFileRoute("/upcoming-programs")({
   component: UpcomingProgramsPage,
@@ -96,6 +97,79 @@ function UpcomingProgramsPage() {
                   <p className="mt-5 font-display text-lg font-semibold text-secondary">
                     Together, we build brighter futures.
                   </p>
+                </div>
+              </div>
+            </article>
+
+            <article className="mt-12 overflow-hidden rounded-3xl border border-border/70 bg-white shadow-xl">
+              <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
+                <img
+                  src={dopGraphic}
+                  alt="I AM DOP 2026 Daughters of Purpose Outreach for girls ages 13 to 18"
+                  className="h-full w-full object-cover"
+                />
+                <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-12">
+                  <div className="flex flex-wrap gap-3">
+                    <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                      <Sparkles className="h-4 w-4" aria-hidden="true" />
+                      Ages 13–18
+                    </span>
+                    <span className="inline-flex items-center gap-2 rounded-full bg-secondary/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-secondary">
+                      <MapPin className="h-4 w-4" aria-hidden="true" />
+                      Alimosho, Lagos State
+                    </span>
+                  </div>
+                  <h2 className="mt-6 font-display text-3xl font-bold text-secondary sm:text-4xl">
+                    I AM DOP 2026
+                  </h2>
+                  <p className="mt-2 font-display text-xl font-semibold text-primary">
+                    Daughters of Purpose Outreach — Theme: More Than Enough
+                  </p>
+                  <p className="mt-5 leading-relaxed text-muted-foreground">
+                    I AM DOP 2026 is a two-day girls&apos; empowerment outreach designed to help
+                    teenage girls recognize their value, strengthen their confidence, and grow into
+                    healthy, creative and purpose-driven young women.
+                  </p>
+                  <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                    {[
+                      "Health and Hygiene",
+                      "Confidence and Emotional Wellness",
+                      "Beauty and Personal Development",
+                      "Creativity, Leadership and Purpose",
+                    ].map((pillar) => (
+                      <div
+                        key={pillar}
+                        className="rounded-xl border border-border/70 bg-surface-warm px-4 py-3 text-sm font-semibold text-secondary"
+                      >
+                        {pillar}
+                      </div>
+                    ))}
+                  </div>
+                  <p className="mt-6 leading-relaxed text-muted-foreground">
+                    Participants will receive practical education, mentorship, creative training and
+                    essential empowerment kits containing hygiene, learning and personal-development
+                    materials.
+                  </p>
+                  <div className="mt-6 rounded-2xl border border-primary/20 bg-primary/5 p-5">
+                    <div className="flex gap-3">
+                      <HeartHandshake
+                        className="mt-0.5 h-6 w-6 shrink-0 text-primary"
+                        aria-hidden="true"
+                      />
+                      <p className="font-semibold leading-relaxed text-secondary">
+                        Your donation will help provide empowerment kits, workshop materials and
+                        meaningful learning experiences for participating girls.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="mt-7">
+                    <Link
+                      to="/donate"
+                      className="inline-flex items-center justify-center rounded-md bg-primary px-7 py-3.5 text-sm font-bold text-primary-foreground shadow-lg transition-colors hover:bg-secondary hover:text-secondary-foreground"
+                    >
+                      Donate to Support a Girl
+                    </Link>
+                  </div>
                 </div>
               </div>
             </article>

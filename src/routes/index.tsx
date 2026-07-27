@@ -20,8 +20,8 @@ function Index() {
       <SiteHeader />
       <main>
         <Hero />
-        <FeaturedProgram />
         <Pillars />
+        <FeaturedProgram />
         <FounderVision />
         <Transparency />
         <Engage />
