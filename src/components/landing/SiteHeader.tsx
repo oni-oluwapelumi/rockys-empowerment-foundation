@@ -13,9 +13,8 @@ const whatWeDo = [
 ];
 
 const links = [
-  { href: "/about", label: "About", page: true },
   { href: "/leadership", label: "OUR TEAM", page: true },
-  { href: "#vision", label: "How We Work" },
+  { href: "/about", label: "About Us", page: true },
   { href: "#pillars", label: "What We Do", dropdown: whatWeDo },
   { href: "/gallery", label: "Gallery", page: true },
   { href: "/upcoming-programs", label: "Programs", page: true },
