@@ -77,7 +77,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         httpEquiv: "Content-Security-Policy",
         content:
-          "default-src 'self'; form-action 'self' https://checkout.flutterwave.com; img-src 'self' data: blob:; font-src 'self' data: https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://checkout.flutterwave.com; script-src-elem 'self' 'unsafe-inline' https://checkout.flutterwave.com; frame-src 'self' https://checkout.flutterwave.com https://*.flutterwave.com; connect-src 'self' https://checkout.flutterwave.com https://*.flutterwave.com https://psqguzafdgeophzfchfk.supabase.co wss://psqguzafdgeophzfchfk.supabase.co;",
+          "default-src 'self'; form-action 'self' https://checkout.flutterwave.com; img-src 'self' data: blob:; font-src 'self' data: https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://checkout.flutterwave.com; script-src-elem 'self' 'unsafe-inline' https://checkout.flutterwave.com; frame-src 'self' https://checkout.flutterwave.com https://*.flutterwave.com; connect-src 'self' https://checkout.flutterwave.com https://*.flutterwave.com https://api.web3forms.com https://psqguzafdgeophzfchfk.supabase.co wss://psqguzafdgeophzfchfk.supabase.co;",
       },
       { title: "Rocky's Empowerment Foundation — Empowering Lives, Restoring Hope" },
       {

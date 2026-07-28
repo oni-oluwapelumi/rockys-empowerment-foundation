@@ -49,10 +49,11 @@ function PrivacyPage() {
       <section>
         <h2>Service providers and international processing</h2>
         <p className="mt-3">
-          We use service providers including Flutterwave for payment processing and Supabase for
-          website data and storage. They process information under their own terms and privacy
-          practices. Information may be processed outside your country; where required, we use
-          appropriate safeguards and limit sharing to what is necessary.
+          We use service providers including Flutterwave for payment processing, Supabase for
+          website data and storage, Web3Forms for delivering contact and volunteer notifications,
+          and Zoho Mail for official email communications. They process information under their own
+          terms and privacy practices. Information may be processed outside your country; where
+          required, we use appropriate safeguards and limit sharing to what is necessary.
         </p>
       </section>
       <section>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CheckCircle2, Mail, UserPlus } from "lucide-react";
+import { CheckCircle2, Mail, MessageSquare, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
@@ -10,6 +10,27 @@ const interests = [
   "Vocational Training & Welfare",
   "Youth Development & Education",
 ];
+
+const WEB3FORMS_ACCESS_KEY = "2903de84-e252-446f-ad37-e899bd6452fb";
+
+async function sendFormNotification(fields: Record<string, string | boolean>) {
+  const response = await fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      access_key: WEB3FORMS_ACCESS_KEY,
+      from_name: "Rocky's Empowerment Foundation Website",
+      ...fields,
+    }),
+  });
+  const result = (await response.json()) as { success?: boolean; message?: string };
+  if (!response.ok || !result.success) {
+    throw new Error(result.message || "Email notification failed.");
+  }
+}
 
 function SuccessCard({ title, body }: { title: string; body: string }) {
   return (
@@ -58,6 +79,20 @@ function VolunteerForm() {
     if (error) {
       toast.error("We could not submit your application. Please try again.");
       return;
+    }
+    try {
+      await sendFormNotification({
+        subject: `New volunteer application from ${form.full_name.trim()}`,
+        submission_type: "Volunteer application",
+        name: form.full_name.trim(),
+        email: form.email.trim().toLowerCase(),
+        phone: form.phone_number.trim(),
+        area_of_interest: form.area_of_interest,
+        message: form.message.trim() || "No additional notes provided.",
+        botcheck: false,
+      });
+    } catch {
+      toast.warning("Your application was saved, but the email notification was delayed.");
     }
     setDone(true);
   }
@@ -199,6 +234,195 @@ function VolunteerForm() {
   );
 }
 
+function ContactForm() {
+  const [done, setDone] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [hasConsented, setHasConsented] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    inquiry_type: "",
+    message: "",
+  });
+
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!form.name || !form.email || !form.inquiry_type || !form.message) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
+    if (!hasConsented) {
+      toast.error("Please provide your consent before submitting.");
+      return;
+    }
+    setSending(true);
+    try {
+      await sendFormNotification({
+        subject: `Website inquiry: ${form.inquiry_type}`,
+        submission_type: "Contact inquiry",
+        name: form.name.trim(),
+        email: form.email.trim().toLowerCase(),
+        phone: form.phone.trim() || "Not provided",
+        inquiry_type: form.inquiry_type,
+        message: form.message.trim(),
+        botcheck: false,
+      });
+      setDone(true);
+    } catch {
+      toast.error("We could not send your message. Please try again or email us directly.");
+    } finally {
+      setSending(false);
+    }
+  }
+
+  if (done) {
+    return (
+      <SuccessCard
+        title="Message Successfully Sent!"
+        body="Thank you for contacting Rocky's Empowerment Foundation. Your inquiry has been delivered to our official inbox, and our team will respond as soon as possible."
+      />
+    );
+  }
+
+  return (
+    <form onSubmit={onSubmit} className="space-y-8">
+      <div className="relative">
+        <input
+          id="contact_name"
+          type="text"
+          required
+          value={form.name}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          className="peer w-full border-b-2 border-border bg-transparent pb-2 pt-6 text-secondary outline-none transition-colors focus:border-primary"
+          placeholder=" "
+        />
+        <label
+          htmlFor="contact_name"
+          className="absolute left-0 top-0 text-[10px] font-bold uppercase tracking-widest text-muted-foreground transition-colors peer-focus:text-primary"
+        >
+          Full Name
+        </label>
+      </div>
+      <div className="relative">
+        <input
+          id="contact_email"
+          type="email"
+          required
+          value={form.email}
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+          className="peer w-full border-b-2 border-border bg-transparent pb-2 pt-6 text-secondary outline-none transition-colors focus:border-primary"
+          placeholder=" "
+        />
+        <label
+          htmlFor="contact_email"
+          className="absolute left-0 top-0 text-[10px] font-bold uppercase tracking-widest text-muted-foreground transition-colors peer-focus:text-primary"
+        >
+          Email Address
+        </label>
+      </div>
+      <div className="relative">
+        <input
+          id="contact_phone"
+          type="tel"
+          value={form.phone}
+          onChange={(e) => setForm({ ...form, phone: e.target.value })}
+          className="peer w-full border-b-2 border-border bg-transparent pb-2 pt-6 text-secondary outline-none transition-colors focus:border-primary"
+          placeholder=" "
+        />
+        <label
+          htmlFor="contact_phone"
+          className="absolute left-0 top-0 text-[10px] font-bold uppercase tracking-widest text-muted-foreground transition-colors peer-focus:text-primary"
+        >
+          Phone Number (optional)
+        </label>
+      </div>
+      <div className="relative">
+        <select
+          id="inquiry_type"
+          required
+          value={form.inquiry_type}
+          onChange={(e) => setForm({ ...form, inquiry_type: e.target.value })}
+          className="peer w-full border-b-2 border-border bg-transparent pb-2 pt-6 text-secondary outline-none transition-colors focus:border-primary"
+        >
+          <option value="" disabled></option>
+          <option value="General inquiry">General inquiry</option>
+          <option value="Donation support">Donation support</option>
+          <option value="Partnership">Partnership</option>
+          <option value="Programs and outreach">Programs and outreach</option>
+          <option value="Media inquiry">Media inquiry</option>
+        </select>
+        <label
+          htmlFor="inquiry_type"
+          className="absolute left-0 top-0 text-[10px] font-bold uppercase tracking-widest text-muted-foreground transition-colors peer-focus:text-primary"
+        >
+          Inquiry Type
+        </label>
+      </div>
+      <div className="relative">
+        <textarea
+          id="contact_message"
+          rows={4}
+          required
+          value={form.message}
+          onChange={(e) => setForm({ ...form, message: e.target.value })}
+          className="peer w-full resize-none border-b-2 border-border bg-transparent pb-2 pt-6 text-secondary outline-none transition-colors focus:border-primary"
+          placeholder=" "
+        />
+        <label
+          htmlFor="contact_message"
+          className="absolute left-0 top-0 text-[10px] font-bold uppercase tracking-widest text-muted-foreground transition-colors peer-focus:text-primary"
+        >
+          Message
+        </label>
+      </div>
+      <div className="hidden" aria-hidden="true">
+        <label htmlFor="contact_botcheck">Leave this field empty</label>
+        <input id="contact_botcheck" type="checkbox" name="botcheck" tabIndex={-1} />
+      </div>
+      <div className="flex items-start gap-3">
+        <input
+          id="contact_consent"
+          type="checkbox"
+          required
+          checked={hasConsented}
+          onChange={(e) => setHasConsented(e.target.checked)}
+          className="mt-0.5 h-4 w-4 shrink-0 accent-primary"
+        />
+        <label htmlFor="contact_consent" className="text-xs leading-relaxed text-muted-foreground">
+          I consent to the Foundation using my information to respond to this inquiry, as described
+          in the{" "}
+          <a
+            href="/privacy"
+            className="font-semibold text-primary underline underline-offset-2 hover:text-secondary"
+          >
+            Privacy Policy
+          </a>
+          .
+        </label>
+      </div>
+      <Button
+        type="submit"
+        size="lg"
+        disabled={sending}
+        className="w-full rounded-sm bg-primary py-5 text-xs font-bold uppercase tracking-[0.3em] text-primary-foreground shadow-lg transition-all hover:bg-secondary hover:text-secondary-foreground"
+      >
+        {sending ? "Sending..." : "Send Inquiry"}
+      </Button>
+      <p className="text-center text-xs text-muted-foreground">
+        You can also email{" "}
+        <a
+          href="mailto:info@rockysempowermentfoundation.org"
+          className="font-semibold text-primary underline underline-offset-2"
+        >
+          info@rockysempowermentfoundation.org
+        </a>
+        .
+      </p>
+    </form>
+  );
+}
+
 function NewsletterForm() {
   const [done, setDone] = useState(false);
   const [email, setEmail] = useState("");
@@ -260,7 +484,7 @@ function NewsletterForm() {
 }
 
 export function Engage() {
-  const [tab, setTab] = useState<"volunteer" | "newsletter">("volunteer");
+  const [tab, setTab] = useState<"contact" | "volunteer" | "newsletter">("volunteer");
 
   return (
     <section id="engage" className="home-engage scroll-mt-20 bg-surface-warm py-20 sm:py-28">
@@ -296,6 +520,18 @@ export function Engage() {
             </button>
             <button
               type="button"
+              onClick={() => setTab("contact")}
+              className={`flex flex-1 items-center justify-center gap-2 py-5 text-xs font-bold uppercase tracking-widest transition-all ${
+                tab === "contact"
+                  ? "border-b-4 border-primary bg-white text-secondary"
+                  : "border-b border-border bg-muted/40 text-muted-foreground hover:text-secondary"
+              }`}
+            >
+              <MessageSquare className="h-4 w-4" />
+              Contact
+            </button>
+            <button
+              type="button"
               onClick={() => setTab("newsletter")}
               className={`flex-1 py-5 flex items-center justify-center gap-2 font-bold text-xs uppercase tracking-widest transition-all ${
                 tab === "newsletter"
@@ -308,7 +544,13 @@ export function Engage() {
             </button>
           </div>
           <div className="p-8 sm:p-12">
-            {tab === "volunteer" ? <VolunteerForm /> : <NewsletterForm />}
+            {tab === "volunteer" ? (
+              <VolunteerForm />
+            ) : tab === "contact" ? (
+              <ContactForm />
+            ) : (
+              <NewsletterForm />
+            )}
           </div>
         </div>
       </div>

@@ -53,7 +53,7 @@ function withSecurityHeaders(response: Response): Response {
       "script-src 'self' 'unsafe-inline' https://checkout.flutterwave.com",
       "script-src-elem 'self' 'unsafe-inline' https://checkout.flutterwave.com",
       "frame-src 'self' https://checkout.flutterwave.com https://*.flutterwave.com",
-      "connect-src 'self' https://checkout.flutterwave.com https://*.flutterwave.com https://psqguzafdgeophzfchfk.supabase.co wss://psqguzafdgeophzfchfk.supabase.co",
+      "connect-src 'self' https://checkout.flutterwave.com https://*.flutterwave.com https://api.web3forms.com https://psqguzafdgeophzfchfk.supabase.co wss://psqguzafdgeophzfchfk.supabase.co",
       "upgrade-insecure-requests",
     ].join("; "),
   );
