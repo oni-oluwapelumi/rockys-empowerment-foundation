@@ -192,6 +192,7 @@ function DonatePage() {
                   >
                     <option value="NGN">Nigerian naira (NGN)</option>
                     <option value="USD">US dollar (USD)</option>
+                    <option value="CAD">Canadian dollar (CAD)</option>
                     <option value="GBP">British pound (GBP)</option>
                     <option value="EUR">Euro (EUR)</option>
                   </select>
