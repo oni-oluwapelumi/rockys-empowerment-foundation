@@ -37,4 +37,4 @@ export function LegalPage({
   );
 }
 
-export const contactEmail = "rockyempowermentfoundation@gmail.com";
+export const contactEmail = "info@rockysempowermentfoundation.org";

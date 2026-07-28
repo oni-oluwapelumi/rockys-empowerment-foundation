@@ -51,7 +51,7 @@ export function SiteFooter() {
             </p>
             <h3 className="mt-2 font-display text-xl font-bold sm:mt-3 sm:text-2xl">Contact Us</h3>
             <a
-              href="mailto:rockyempowermentfoundation@gmail.com"
+              href="mailto:info@rockysempowermentfoundation.org"
               className="mt-4 inline-flex max-w-full items-start justify-center gap-2 text-xs font-semibold leading-5 text-white/80 underline-offset-4 transition-colors hover:text-primary hover:underline sm:mt-6 sm:gap-3 sm:text-sm"
             >
               <Mail
@@ -59,8 +59,8 @@ export function SiteFooter() {
                 aria-hidden="true"
               />
               <span>
-                rockyempowermentfoundation
-                <span className="block sm:inline">@gmail.com</span>
+                info
+                <span className="block sm:inline">@rockysempowermentfoundation.org</span>
               </span>
             </a>
           </section>
