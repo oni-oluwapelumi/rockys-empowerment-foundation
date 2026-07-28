@@ -21,6 +21,7 @@ type VerifiedTransaction = {
   status: string;
   created_at?: string;
   customer?: { name?: string | null };
+  meta?: { campaign?: string | null };
 };
 
 function readSecret(env: RuntimeEnv, name: string): string | undefined {
@@ -110,12 +111,22 @@ export async function handleFlutterwaveWebhook(request: Request, env: RuntimeEnv
   const supabase = createClient(supabaseUrl, serviceRoleKey, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
+  let campaignId: string | null = null;
+  if (transaction.meta?.campaign) {
+    const { data: campaign } = await supabase
+      .from("campaigns")
+      .select("id")
+      .eq("title", transaction.meta.campaign)
+      .maybeSingle();
+    campaignId = campaign?.id ?? null;
+  }
   const { error } = await supabase.from("donations").upsert(
     {
       donor_name: transaction.customer?.name || null,
       amount: Number(transaction.amount),
       currency: transaction.currency,
       status: "received",
+      campaign_id: campaignId,
       reference: transaction.tx_ref,
       donated_at: transaction.created_at ?? new Date().toISOString(),
     },

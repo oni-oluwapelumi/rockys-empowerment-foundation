@@ -57,6 +57,7 @@ export function FeaturedProgram() {
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <Link
                   to="/donate"
+                  search={{ campaign: "back-to-school" }}
                   className="inline-flex items-center justify-center rounded-md bg-primary px-7 py-3.5 text-sm font-bold text-primary-foreground shadow-lg transition-colors hover:bg-secondary hover:text-secondary-foreground"
                 >
                   Donate Now
@@ -115,6 +116,7 @@ export function FeaturedProgram() {
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <Link
                   to="/donate"
+                  search={{ campaign: "i-am-dop" }}
                   className="inline-flex items-center justify-center rounded-md bg-primary px-7 py-3.5 text-sm font-bold text-primary-foreground shadow-lg transition-colors hover:bg-secondary hover:text-secondary-foreground"
                 >
                   Donate to Support a Girl

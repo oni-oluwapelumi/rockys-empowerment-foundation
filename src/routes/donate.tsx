@@ -6,15 +6,40 @@ import { SiteHeader } from "@/components/landing/SiteHeader";
 import { type DonationDetails, supabase } from "@/lib/supabase";
 
 export const Route = createFileRoute("/donate")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    campaign:
+      search.campaign === "back-to-school" || search.campaign === "i-am-dop"
+        ? search.campaign
+        : "general",
+  }),
   component: DonatePage,
 });
 
 function DonatePage() {
+  const { campaign: initialCampaign } = Route.useSearch();
   const [details, setDetails] = useState<DonationDetails | null>(null);
   const [amountInput, setAmountInput] = useState("");
   const [currency, setCurrency] = useState("NGN");
+  const [campaign, setCampaign] = useState(initialCampaign);
   const [amountError, setAmountError] = useState("");
   const minimumAmount = currency === "NGN" ? 100 : 1;
+  const campaignDetails = {
+    general: {
+      reference: "GENERAL",
+      label: "Where it is needed most",
+      description: "Support Foundation initiatives",
+    },
+    "back-to-school": {
+      reference: "BTS2026",
+      label: "Back-to-School Outreach 2026",
+      description: "Equip a less-privileged student for school",
+    },
+    "i-am-dop": {
+      reference: "DOP2026",
+      label: "I AM DOP 2026",
+      description: "Support the Daughters of Purpose Outreach",
+    },
+  }[campaign];
 
   useEffect(() => {
     void supabase
@@ -83,14 +108,27 @@ function DonatePage() {
                   name="PBFPubKey"
                   value={import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY}
                 />
-                <input type="hidden" name="tx_ref" value={`RF_DONATION_${Date.now()}`} />
+                <input
+                  type="hidden"
+                  name="tx_ref"
+                  value={`RF_DONATION_${campaignDetails.reference}_${Date.now()}`}
+                />
+                <input
+                  type="hidden"
+                  name="redirect_url"
+                  value="https://rockysempowermentfoundation.org/donation-success"
+                />
+                <input type="hidden" name="meta[campaign]" value={campaignDetails.label} />
                 <input
                   type="hidden"
                   name="payment_options"
                   value={currency === "NGN" ? "card, banktransfer, ussd" : "card"}
                 />
-                <input type="hidden" name="customer[email]" value="Rockystv21@gmail.com" />
-                <input type="hidden" name="customer[phone_number]" value="07064352758" />
+                <input
+                  type="hidden"
+                  name="customer[email]"
+                  value="info@rockysempowermentfoundation.org"
+                />
                 <input type="hidden" name="customer[name]" value="Rocky's Foundation Donor" />
                 <input
                   type="hidden"
@@ -100,8 +138,22 @@ function DonatePage() {
                 <input
                   type="hidden"
                   name="customizations[description]"
-                  value="Support Foundation Initiatives"
+                  value={campaignDetails.description}
                 />
+                <label className="grid gap-1.5 text-sm font-semibold text-secondary">
+                  Choose where your gift will help
+                  <select
+                    value={campaign}
+                    onChange={(event) =>
+                      setCampaign(event.target.value as "general" | "back-to-school" | "i-am-dop")
+                    }
+                    className="rounded-md border border-border bg-white px-3 py-2.5 font-normal text-foreground outline-none focus:border-primary"
+                  >
+                    <option value="general">Where it is needed most</option>
+                    <option value="back-to-school">Back-to-School Outreach 2026</option>
+                    <option value="i-am-dop">I AM DOP 2026 — Daughters of Purpose</option>
+                  </select>
+                </label>
                 <label className="grid gap-1.5 text-sm font-semibold text-secondary">
                   Donation amount
                   <input

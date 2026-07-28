@@ -14,6 +14,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as LeadershipRouteImport } from './routes/leadership'
 import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as DonationSuccessRouteImport } from './routes/donation-success'
 import { Route as DonationPolicyRouteImport } from './routes/donation-policy'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -43,6 +44,11 @@ const LeadershipRoute = LeadershipRouteImport.update({
 const GalleryRoute = GalleryRouteImport.update({
   id: '/gallery',
   path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DonationSuccessRoute = DonationSuccessRouteImport.update({
+  id: '/donation-success',
+  path: '/donation-success',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DonationPolicyRoute = DonationPolicyRouteImport.update({
@@ -77,6 +83,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/donate': typeof DonateRoute
   '/donation-policy': typeof DonationPolicyRoute
+  '/donation-success': typeof DonationSuccessRoute
   '/gallery': typeof GalleryRoute
   '/leadership': typeof LeadershipRoute
   '/privacy': typeof PrivacyRoute
@@ -89,6 +96,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/donate': typeof DonateRoute
   '/donation-policy': typeof DonationPolicyRoute
+  '/donation-success': typeof DonationSuccessRoute
   '/gallery': typeof GalleryRoute
   '/leadership': typeof LeadershipRoute
   '/privacy': typeof PrivacyRoute
@@ -102,6 +110,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/donate': typeof DonateRoute
   '/donation-policy': typeof DonationPolicyRoute
+  '/donation-success': typeof DonationSuccessRoute
   '/gallery': typeof GalleryRoute
   '/leadership': typeof LeadershipRoute
   '/privacy': typeof PrivacyRoute
@@ -116,6 +125,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/donate'
     | '/donation-policy'
+    | '/donation-success'
     | '/gallery'
     | '/leadership'
     | '/privacy'
@@ -128,6 +138,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/donate'
     | '/donation-policy'
+    | '/donation-success'
     | '/gallery'
     | '/leadership'
     | '/privacy'
@@ -140,6 +151,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/donate'
     | '/donation-policy'
+    | '/donation-success'
     | '/gallery'
     | '/leadership'
     | '/privacy'
@@ -153,6 +165,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   DonateRoute: typeof DonateRoute
   DonationPolicyRoute: typeof DonationPolicyRoute
+  DonationSuccessRoute: typeof DonationSuccessRoute
   GalleryRoute: typeof GalleryRoute
   LeadershipRoute: typeof LeadershipRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -195,6 +208,13 @@ declare module '@tanstack/react-router' {
       path: '/gallery'
       fullPath: '/gallery'
       preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/donation-success': {
+      id: '/donation-success'
+      path: '/donation-success'
+      fullPath: '/donation-success'
+      preLoaderRoute: typeof DonationSuccessRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/donation-policy': {
@@ -241,6 +261,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   DonateRoute: DonateRoute,
   DonationPolicyRoute: DonationPolicyRoute,
+  DonationSuccessRoute: DonationSuccessRoute,
   GalleryRoute: GalleryRoute,
   LeadershipRoute: LeadershipRoute,
   PrivacyRoute: PrivacyRoute,
