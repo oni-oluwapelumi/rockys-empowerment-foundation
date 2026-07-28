@@ -83,18 +83,27 @@ async function recordVerifiedDonation(
       .maybeSingle();
     campaignId = campaign?.id ?? null;
   }
-  const { error } = await supabase.from("donations").upsert(
-    {
-      donor_name: transaction.customer?.name || null,
-      amount: Number(transaction.amount),
-      currency: transaction.currency,
-      status: "received",
-      campaign_id: campaignId,
-      reference: transaction.tx_ref,
-      donated_at: transaction.created_at ?? new Date().toISOString(),
-    },
-    { onConflict: "reference" },
-  );
+  const donationRecord = {
+    donor_name: transaction.customer?.name || null,
+    amount: Number(transaction.amount),
+    currency: transaction.currency,
+    status: "received",
+    campaign_id: campaignId,
+    reference: transaction.tx_ref,
+    donated_at: transaction.created_at ?? new Date().toISOString(),
+  };
+  const { data: existingDonation, error: lookupError } = await supabase
+    .from("donations")
+    .select("id")
+    .eq("reference", transaction.tx_ref)
+    .maybeSingle();
+  if (lookupError) {
+    console.error("Could not check for an existing Flutterwave donation", lookupError.message);
+    return new Response("Database lookup failed", { status: 500 });
+  }
+  const { error } = existingDonation
+    ? await supabase.from("donations").update(donationRecord).eq("id", existingDonation.id)
+    : await supabase.from("donations").insert(donationRecord);
   if (error) {
     console.error("Could not record verified Flutterwave donation", error.message);
     return new Response("Database write failed", { status: 500 });
