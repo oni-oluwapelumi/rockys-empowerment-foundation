@@ -17,6 +17,20 @@ import {
 export const Route = createFileRoute("/admin")({ component: AdminPage });
 
 const emptyDonation = { bank_name: "", account_name: "", account_number: "", instructions: "" };
+const foundationCampaigns = [
+  {
+    title: "Back-to-School Outreach 2026",
+    description: "Supporting 100 less-privileged students transitioning into JSS1 and SS1.",
+    goal_amount: 0,
+    status: "running",
+  },
+  {
+    title: "I AM DOP 2026",
+    description: "Daughters of Purpose empowerment outreach for girls ages 13–18 in Alimosho, Lagos State.",
+    goal_amount: 0,
+    status: "running",
+  },
+] as const;
 
 function AdminPage() {
   const [loading, setLoading] = useState(true);
@@ -49,15 +63,39 @@ function AdminPage() {
       supabase.from("gallery_items").select("*").order("created_at", { ascending: false }),
     ]);
 
-    if (programResult.error || applicationResult.error || subscriberResult.error) {
+    if (
+      programResult.error ||
+      applicationResult.error ||
+      subscriberResult.error ||
+      donationsResult.error ||
+      campaignsResult.error ||
+      galleryResult.error
+    ) {
       toast.error("Could not load all admin data. Please refresh and try again.");
+    }
+    let dashboardCampaigns = (campaignsResult.data ?? []) as Campaign[];
+    if (!campaignsResult.error) {
+      const existingTitles = new Set(dashboardCampaigns.map((campaign) => campaign.title));
+      const missingCampaigns = foundationCampaigns.filter(({ title }) => !existingTitles.has(title));
+      if (missingCampaigns.length) {
+        const { error: seedError } = await supabase.from("campaigns").insert(missingCampaigns);
+        if (seedError) {
+          toast.error("The foundation campaigns could not be added to the dashboard.");
+        } else {
+          const refreshedCampaigns = await supabase
+            .from("campaigns")
+            .select("*")
+            .order("created_at", { ascending: false });
+          dashboardCampaigns = (refreshedCampaigns.data ?? dashboardCampaigns) as Campaign[];
+        }
+      }
     }
     setPrograms((programResult.data ?? []) as Program[]);
     setApplications((applicationResult.data ?? []) as VolunteerApplication[]);
     setSubscribers((subscriberResult.data ?? []) as NewsletterSubscriber[]);
     if (donationResult.data) setDonation(donationResult.data as DonationDetails);
     setDonations((donationsResult.data ?? []) as Donation[]);
-    setCampaigns((campaignsResult.data ?? []) as Campaign[]);
+    setCampaigns(dashboardCampaigns);
     setGalleryItems((galleryResult.data ?? []) as GalleryItem[]);
   }
 
