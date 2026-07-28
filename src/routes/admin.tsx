@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { LogOut, Plus, ShieldCheck, Trash2, Upload } from "lucide-react";
-import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { toast } from "sonner";
 import {
   type DonationDetails,
@@ -32,7 +32,7 @@ function AdminPage() {
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
   const [newProgram, setNewProgram] = useState({ title: "", summary: "", location: "", program_date: "", status: "upcoming" });
   const [programImage, setProgramImage] = useState<File | null>(null);
-  const [newDonation, setNewDonation] = useState({ donor_name: "", amount: "", status: "pending", reference: "", campaign_id: "" });
+  const [newDonation, setNewDonation] = useState({ donor_name: "", amount: "", currency: "NGN", status: "pending", reference: "", campaign_id: "" });
   const [newCampaign, setNewCampaign] = useState({ title: "", description: "", goal_amount: "", status: "running" });
   const [galleryFile, setGalleryFile] = useState<File | null>(null);
   const [galleryCaption, setGalleryCaption] = useState("");
@@ -168,12 +168,13 @@ function AdminPage() {
     const { error } = await supabase.from("donations").insert({
       donor_name: newDonation.donor_name || null,
       amount: Number(newDonation.amount),
+      currency: newDonation.currency,
       status: newDonation.status,
       reference: newDonation.reference || null,
       campaign_id: newDonation.campaign_id || null,
     });
     if (error) return toast.error(error.message);
-    setNewDonation({ donor_name: "", amount: "", status: "pending", reference: "", campaign_id: "" });
+    setNewDonation({ donor_name: "", amount: "", currency: "NGN", status: "pending", reference: "", campaign_id: "" });
     toast.success("Donation record added.");
     await loadDashboard();
   }
@@ -225,13 +226,32 @@ function AdminPage() {
     );
   }
 
-  const receivedTotal = donations.filter((item) => item.status === "received").reduce((total, item) => total + Number(item.amount), 0);
-  const pendingTotal = donations.filter((item) => item.status === "pending").reduce((total, item) => total + Number(item.amount), 0);
-  const cancelledTotal = donations.filter((item) => item.status === "cancelled").reduce((total, item) => total + Number(item.amount), 0);
+  const currencies = ["NGN", "USD", "GBP", "EUR", "CAD"] as const;
+  const currencyColors: Record<(typeof currencies)[number], string> = {
+    NGN: "#c02428",
+    USD: "#2f855a",
+    GBP: "#5a3d8a",
+    EUR: "#2563eb",
+    CAD: "#dc2626",
+  };
+  const totalsFor = (status: Donation["status"]) =>
+    currencies.map((currency) => ({
+      currency,
+      amount: donations
+        .filter((item) => item.status === status && item.currency.toUpperCase() === currency)
+        .reduce((total, item) => total + Number(item.amount), 0),
+    }));
+  const formatMoney = (amount: number, currency: string) =>
+    new Intl.NumberFormat("en", { style: "currency", currency, maximumFractionDigits: 2 }).format(amount);
+  const receivedTotals = totalsFor("received");
+  const pendingTotals = totalsFor("pending");
+  const cancelledTotals = totalsFor("cancelled");
+  const formatTotals = (totals: ReturnType<typeof totalsFor>) =>
+    totals.filter(({ amount }) => amount > 0).map(({ amount, currency }) => formatMoney(amount, currency));
   const chartData = [
-    { name: "Received", amount: receivedTotal },
-    { name: "Pending", amount: pendingTotal },
-    { name: "Cancelled", amount: cancelledTotal },
+    { name: "Received", ...Object.fromEntries(receivedTotals.map(({ currency, amount }) => [currency, amount])) },
+    { name: "Pending", ...Object.fromEntries(pendingTotals.map(({ currency, amount }) => [currency, amount])) },
+    { name: "Cancelled", ...Object.fromEntries(cancelledTotals.map(({ currency, amount }) => [currency, amount])) },
   ];
 
   return (
@@ -244,18 +264,18 @@ function AdminPage() {
 
         <section className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
           {[
-            ["Total received", receivedTotal.toLocaleString(), "text-primary"],
-            ["Pending donations", pendingTotal.toLocaleString(), "text-amber-600"],
-            ["Cancelled donations", cancelledTotal.toLocaleString(), "text-muted-foreground"],
-            ["Running campaigns", campaigns.filter((item) => item.status === "running").length, "text-secondary"],
-            ["People reached", applications.length + subscribers.length, "text-secondary"],
-          ].map(([label, value, color]) => <article key={String(label)} className="rounded-2xl bg-white p-5 shadow-sm"><p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">{label}</p><p className={`mt-3 font-display text-3xl font-bold ${color}`}>{value}</p></article>)}
+            ["Total received", formatTotals(receivedTotals), "text-primary"],
+            ["Pending donations", formatTotals(pendingTotals), "text-amber-600"],
+            ["Cancelled donations", formatTotals(cancelledTotals), "text-muted-foreground"],
+          ].map(([label, values, color]) => <article key={String(label)} className="rounded-2xl bg-white p-5 shadow-sm"><p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">{label}</p><div className={`mt-3 space-y-1 font-display text-2xl font-bold ${color}`}>{(values as string[]).length ? (values as string[]).map((value) => <p key={value}>{value}</p>) : <p>—</p>}</div></article>)}
+          <article className="rounded-2xl bg-white p-5 shadow-sm"><p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Running campaigns</p><p className="mt-3 font-display text-3xl font-bold text-secondary">{campaigns.filter((item) => item.status === "running").length}</p></article>
+          <article className="rounded-2xl bg-white p-5 shadow-sm"><p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">People reached</p><p className="mt-3 font-display text-3xl font-bold text-secondary">{applications.length + subscribers.length}</p></article>
         </section>
 
-        <section className="mt-6 rounded-2xl bg-white p-6 shadow-sm sm:p-8"><h2 className="font-display text-2xl font-bold text-secondary">Donation overview</h2><div className="mt-6 h-64"><ResponsiveContainer width="100%" height="100%"><BarChart data={chartData}><XAxis dataKey="name" /><YAxis /><Tooltip /><Bar dataKey="amount" fill="#c02428" radius={[6, 6, 0, 0]} /></BarChart></ResponsiveContainer></div></section>
+        <section className="mt-6 rounded-2xl bg-white p-6 shadow-sm sm:p-8"><h2 className="font-display text-2xl font-bold text-secondary">Donation overview by currency</h2><div className="mt-6 h-64"><ResponsiveContainer width="100%" height="100%"><BarChart data={chartData}><XAxis dataKey="name" /><YAxis /><Tooltip /><Legend />{currencies.map((currency) => <Bar key={currency} dataKey={currency} fill={currencyColors[currency]} radius={[4, 4, 0, 0]} />)}</BarChart></ResponsiveContainer></div></section>
 
         <div className="mt-6 grid gap-6 lg:grid-cols-3">
-          <section className="rounded-2xl bg-white p-6 shadow-sm"><h2 className="font-display text-xl font-bold text-secondary">Record donation</h2><form onSubmit={addDonation} className="mt-5 grid gap-3"><input placeholder="Donor name (optional)" value={newDonation.donor_name} onChange={(event) => setNewDonation({ ...newDonation, donor_name: event.target.value })} className="rounded-md border border-border px-3 py-2" /><input required min="1" step="0.01" type="number" placeholder="Amount" value={newDonation.amount} onChange={(event) => setNewDonation({ ...newDonation, amount: event.target.value })} className="rounded-md border border-border px-3 py-2" /><select value={newDonation.status} onChange={(event) => setNewDonation({ ...newDonation, status: event.target.value })} className="rounded-md border border-border px-3 py-2"><option value="pending">Pending</option><option value="received">Received</option><option value="cancelled">Cancelled</option></select><select value={newDonation.campaign_id} onChange={(event) => setNewDonation({ ...newDonation, campaign_id: event.target.value })} className="rounded-md border border-border px-3 py-2"><option value="">No campaign</option>{campaigns.map((campaign) => <option key={campaign.id} value={campaign.id}>{campaign.title}</option>)}</select><input placeholder="Reference (optional)" value={newDonation.reference} onChange={(event) => setNewDonation({ ...newDonation, reference: event.target.value })} className="rounded-md border border-border px-3 py-2" /><button className="rounded-md bg-primary px-3 py-2 text-sm font-bold text-primary-foreground">Save donation</button></form></section>
+          <section className="rounded-2xl bg-white p-6 shadow-sm"><h2 className="font-display text-xl font-bold text-secondary">Record donation</h2><form onSubmit={addDonation} className="mt-5 grid gap-3"><input placeholder="Donor name (optional)" value={newDonation.donor_name} onChange={(event) => setNewDonation({ ...newDonation, donor_name: event.target.value })} className="rounded-md border border-border px-3 py-2" /><input required min="1" step="0.01" type="number" placeholder="Amount" value={newDonation.amount} onChange={(event) => setNewDonation({ ...newDonation, amount: event.target.value })} className="rounded-md border border-border px-3 py-2" /><select value={newDonation.currency} onChange={(event) => setNewDonation({ ...newDonation, currency: event.target.value })} className="rounded-md border border-border px-3 py-2">{currencies.map((currency) => <option key={currency} value={currency}>{currency}</option>)}</select><select value={newDonation.status} onChange={(event) => setNewDonation({ ...newDonation, status: event.target.value })} className="rounded-md border border-border px-3 py-2"><option value="pending">Pending</option><option value="received">Received</option><option value="cancelled">Cancelled</option></select><select value={newDonation.campaign_id} onChange={(event) => setNewDonation({ ...newDonation, campaign_id: event.target.value })} className="rounded-md border border-border px-3 py-2"><option value="">No campaign</option>{campaigns.map((campaign) => <option key={campaign.id} value={campaign.id}>{campaign.title}</option>)}</select><input placeholder="Reference (optional)" value={newDonation.reference} onChange={(event) => setNewDonation({ ...newDonation, reference: event.target.value })} className="rounded-md border border-border px-3 py-2" /><button className="rounded-md bg-primary px-3 py-2 text-sm font-bold text-primary-foreground">Save donation</button></form></section>
           <section className="rounded-2xl bg-white p-6 shadow-sm"><h2 className="font-display text-xl font-bold text-secondary">Create campaign</h2><form onSubmit={addCampaign} className="mt-5 grid gap-3"><input required placeholder="Campaign title" value={newCampaign.title} onChange={(event) => setNewCampaign({ ...newCampaign, title: event.target.value })} className="rounded-md border border-border px-3 py-2" /><textarea placeholder="Description" value={newCampaign.description} onChange={(event) => setNewCampaign({ ...newCampaign, description: event.target.value })} className="rounded-md border border-border px-3 py-2" /><input type="number" min="0" placeholder="Fundraising goal" value={newCampaign.goal_amount} onChange={(event) => setNewCampaign({ ...newCampaign, goal_amount: event.target.value })} className="rounded-md border border-border px-3 py-2" /><select value={newCampaign.status} onChange={(event) => setNewCampaign({ ...newCampaign, status: event.target.value })} className="rounded-md border border-border px-3 py-2"><option value="running">Running</option><option value="draft">Draft</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option></select><button className="rounded-md bg-secondary px-3 py-2 text-sm font-bold text-secondary-foreground">Save campaign</button></form></section>
           <section className="rounded-2xl bg-white p-6 shadow-sm"><h2 className="font-display text-xl font-bold text-secondary">Upload gallery image</h2><form onSubmit={uploadGallery} className="mt-5 grid gap-3"><label htmlFor="gallery-image" title={galleryFile?.name ?? "Upload gallery image"} className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-md border border-border text-secondary transition-colors hover:border-primary hover:bg-primary/10"><Upload className="h-5 w-5" /><span className="sr-only">Upload gallery image</span><input required id="gallery-image" type="file" accept="image/*" onChange={(event) => setGalleryFile(event.target.files?.[0] ?? null)} className="sr-only" /></label><input placeholder="Caption (optional)" value={galleryCaption} onChange={(event) => setGalleryCaption(event.target.value)} className="rounded-md border border-border px-3 py-2" /><button className="rounded-md bg-primary px-3 py-2 text-sm font-bold text-primary-foreground">Upload image</button></form><p className="mt-4 text-sm text-muted-foreground">{galleryItems.length} gallery image{galleryItems.length === 1 ? "" : "s"} uploaded.</p></section>
         </div>
