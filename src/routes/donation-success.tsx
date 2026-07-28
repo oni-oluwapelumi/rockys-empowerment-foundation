@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CheckCircle2, Clock3, XCircle } from "lucide-react";
 import { SiteFooter } from "@/components/landing/SiteFooter";
@@ -17,6 +18,15 @@ function DonationSuccessPage() {
   const successful = status === "successful" || status === "completed";
   const failed = status === "failed" || status === "cancelled";
   const Icon = successful ? CheckCircle2 : failed ? XCircle : Clock3;
+
+  useEffect(() => {
+    if (!successful || !reference.startsWith("RF_DONATION_")) return;
+    void fetch("/api/flutterwave/verify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ tx_ref: reference }),
+    });
+  }, [reference, successful]);
 
   return (
     <div className="min-h-screen bg-background">

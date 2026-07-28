@@ -24,6 +24,13 @@ type VerifiedTransaction = {
   meta?: { campaign?: string | null };
 };
 
+function campaignTitleFor(transaction: VerifiedTransaction) {
+  if (transaction.meta?.campaign) return transaction.meta.campaign;
+  if (transaction.tx_ref.includes("_BTS2026_")) return "Back-to-School Outreach 2026";
+  if (transaction.tx_ref.includes("_DOP2026_")) return "I AM DOP 2026";
+  return null;
+}
+
 function readSecret(env: RuntimeEnv, name: string): string | undefined {
   const runtimeValue = env[name];
   if (typeof runtimeValue === "string" && runtimeValue) return runtimeValue;
@@ -47,6 +54,93 @@ async function validSignature(rawBody: string, request: Request, secretHash: str
 
   // Flutterwave v3 accounts can still send the legacy verification header.
   return request.headers.get("verif-hash") === secretHash;
+}
+
+async function recordVerifiedDonation(
+  transaction: VerifiedTransaction,
+  supabaseUrl: string,
+  serviceRoleKey: string,
+) {
+  if (
+    transaction.status !== "successful" ||
+    !transaction.tx_ref.startsWith("RF_DONATION_") ||
+    !Number.isFinite(Number(transaction.amount)) ||
+    Number(transaction.amount) <= 0
+  ) {
+    return new Response("Payment was not verified", { status: 422 });
+  }
+
+  const supabase = createClient(supabaseUrl, serviceRoleKey, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+  let campaignId: string | null = null;
+  const campaignTitle = campaignTitleFor(transaction);
+  if (campaignTitle) {
+    const { data: campaign } = await supabase
+      .from("campaigns")
+      .select("id")
+      .eq("title", campaignTitle)
+      .maybeSingle();
+    campaignId = campaign?.id ?? null;
+  }
+  const { error } = await supabase.from("donations").upsert(
+    {
+      donor_name: transaction.customer?.name || null,
+      amount: Number(transaction.amount),
+      currency: transaction.currency,
+      status: "received",
+      campaign_id: campaignId,
+      reference: transaction.tx_ref,
+      donated_at: transaction.created_at ?? new Date().toISOString(),
+    },
+    { onConflict: "reference" },
+  );
+  if (error) {
+    console.error("Could not record verified Flutterwave donation", error.message);
+    return new Response("Database write failed", { status: 500 });
+  }
+
+  return new Response("OK", { status: 200 });
+}
+
+export async function handleFlutterwaveReferenceVerification(request: Request, env: RuntimeEnv) {
+  if (request.method !== "POST") {
+    return new Response("Method not allowed", { status: 405, headers: { Allow: "POST" } });
+  }
+
+  const secretKey = readSecret(env, "FLW_SECRET_KEY");
+  const supabaseUrl = readSecret(env, "SUPABASE_URL") ?? readSecret(env, "VITE_SUPABASE_URL");
+  const serviceRoleKey = readSecret(env, "SUPABASE_SERVICE_ROLE_KEY");
+  if (!secretKey || !supabaseUrl || !serviceRoleKey) {
+    return new Response("Verification is not configured", { status: 503 });
+  }
+
+  let txRef = "";
+  try {
+    const payload = (await request.json()) as { tx_ref?: unknown };
+    if (typeof payload.tx_ref === "string") txRef = payload.tx_ref;
+  } catch {
+    return new Response("Invalid JSON", { status: 400 });
+  }
+  if (!/^RF_DONATION_(GENERAL|BTS2026|DOP2026)_\d+$/.test(txRef)) {
+    return new Response("Invalid transaction reference", { status: 400 });
+  }
+
+  const verificationResponse = await fetch(
+    `https://api.flutterwave.com/v3/transactions/verify_by_reference?tx_ref=${encodeURIComponent(txRef)}`,
+    { headers: { Authorization: `Bearer ${secretKey}`, "Content-Type": "application/json" } },
+  );
+  if (!verificationResponse.ok) {
+    return new Response("Verification failed", { status: 502 });
+  }
+  const verification = (await verificationResponse.json()) as {
+    status?: string;
+    data?: VerifiedTransaction;
+  };
+  if (verification.status !== "success" || !verification.data || verification.data.tx_ref !== txRef) {
+    return new Response("Payment was not verified", { status: 422 });
+  }
+  return recordVerifiedDonation(verification.data, supabaseUrl, serviceRoleKey);
 }
 
 export async function handleFlutterwaveWebhook(request: Request, env: RuntimeEnv) {
@@ -99,43 +193,10 @@ export async function handleFlutterwaveWebhook(request: Request, env: RuntimeEnv
   if (
     verification.status !== "success" ||
     !transaction ||
-    transaction.status !== "successful" ||
-    !transaction.tx_ref.startsWith("RF_DONATION_") ||
     (webhookReference && webhookReference !== transaction.tx_ref) ||
-    !Number.isFinite(Number(transaction.amount)) ||
-    Number(transaction.amount) <= 0
+    transaction.status !== "successful"
   ) {
     return new Response("Payment was not verified", { status: 422 });
   }
-
-  const supabase = createClient(supabaseUrl, serviceRoleKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
-  let campaignId: string | null = null;
-  if (transaction.meta?.campaign) {
-    const { data: campaign } = await supabase
-      .from("campaigns")
-      .select("id")
-      .eq("title", transaction.meta.campaign)
-      .maybeSingle();
-    campaignId = campaign?.id ?? null;
-  }
-  const { error } = await supabase.from("donations").upsert(
-    {
-      donor_name: transaction.customer?.name || null,
-      amount: Number(transaction.amount),
-      currency: transaction.currency,
-      status: "received",
-      campaign_id: campaignId,
-      reference: transaction.tx_ref,
-      donated_at: transaction.created_at ?? new Date().toISOString(),
-    },
-    { onConflict: "reference" },
-  );
-  if (error) {
-    console.error("Could not record verified Flutterwave donation", error.message);
-    return new Response("Database write failed", { status: 500 });
-  }
-
-  return new Response("OK", { status: 200 });
+  return recordVerifiedDonation(transaction, supabaseUrl, serviceRoleKey);
 }

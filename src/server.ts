@@ -2,7 +2,10 @@ import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
-import { handleFlutterwaveWebhook } from "./lib/flutterwave-webhook";
+import {
+  handleFlutterwaveReferenceVerification,
+  handleFlutterwaveWebhook,
+} from "./lib/flutterwave-webhook";
 
 type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
@@ -91,6 +94,14 @@ export default {
       if (new URL(request.url).pathname === "/api/flutterwave/webhook") {
         return withSecurityHeaders(
           await handleFlutterwaveWebhook(request, (env ?? {}) as Record<string, unknown>),
+        );
+      }
+      if (new URL(request.url).pathname === "/api/flutterwave/verify") {
+        return withSecurityHeaders(
+          await handleFlutterwaveReferenceVerification(
+            request,
+            (env ?? {}) as Record<string, unknown>,
+          ),
         );
       }
       const handler = await getServerEntry();
