@@ -1,6 +1,6 @@
 import { Instagram, LockKeyhole, Mail, Youtube } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import logo from "@/assets/logo.png";
+import footerLogo from "@/assets/footer-logo.png";
 
 function TikTokIcon({ className }: { className?: string }) {
   return (
@@ -40,8 +40,8 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-8 sm:py-16">
         <div className="flex flex-col items-center gap-7 sm:gap-10">
           <img
-            src={logo}
-            alt="Rocky's Empowerment Foundation seal"
+            src={footerLogo}
+            alt="Rocky's Empowerment Foundation logo mark"
             className="h-28 w-auto object-contain sm:h-44"
           />
 
