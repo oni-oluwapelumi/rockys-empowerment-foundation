@@ -1,4 +1,4 @@
-import { Instagram, LockKeyhole, Mail, Youtube } from "lucide-react";
+import { Instagram, LockKeyhole, Mail, MapPin, Phone, Youtube } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import footerLogo from "@/assets/footer-logo.png";
 
@@ -50,19 +50,26 @@ export function SiteFooter() {
               Get in touch
             </p>
             <h3 className="mt-2 font-display text-xl font-bold sm:mt-3 sm:text-2xl">Contact Us</h3>
-            <a
-              href="mailto:info@rockysempowermentfoundation.org"
-              className="mt-4 inline-flex max-w-full items-start justify-center gap-2 text-xs font-semibold leading-5 text-white/80 underline-offset-4 transition-colors hover:text-primary hover:underline sm:mt-6 sm:gap-3 sm:text-sm"
-            >
-              <Mail
-                className="mt-0.5 h-4 w-4 shrink-0 text-primary sm:h-5 sm:w-5"
-                aria-hidden="true"
-              />
-              <span>
-                info
-                <span className="block sm:inline">@rockysempowermentfoundation.org</span>
-              </span>
-            </a>
+            <div className="mt-4 grid gap-3 text-xs font-semibold leading-5 text-white/80 sm:mt-6 sm:text-sm">
+              <a
+                href="mailto:info@rockysempowermentfoundation.org"
+                className="inline-flex max-w-full items-start justify-center gap-2 underline-offset-4 transition-colors hover:text-primary hover:underline sm:gap-3"
+              >
+                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary sm:h-5 sm:w-5" aria-hidden="true" />
+                <span>info@rockysempowermentfoundation.org</span>
+              </a>
+              <a
+                href="tel:+2347064352758"
+                className="inline-flex items-center justify-center gap-2 underline-offset-4 transition-colors hover:text-primary hover:underline sm:gap-3"
+              >
+                <Phone className="h-4 w-4 shrink-0 text-primary sm:h-5 sm:w-5" aria-hidden="true" />
+                <span>+234 706 435 2758</span>
+              </a>
+              <p className="inline-flex items-start justify-center gap-2 sm:gap-3">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary sm:h-5 sm:w-5" aria-hidden="true" />
+                <span>Akowonjo Road, Egbeda, Lagos State 100275, Nigeria</span>
+              </p>
+            </div>
           </section>
 
           <div className="grid w-full max-w-sm grid-cols-6 justify-items-center gap-2 sm:flex sm:w-auto sm:max-w-none sm:items-center sm:gap-6">

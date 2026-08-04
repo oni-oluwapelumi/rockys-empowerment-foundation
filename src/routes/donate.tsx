@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { BookOpen, Heart, House, Stethoscope } from "lucide-react";
+import { BookOpen, Heart, House, Mail, MapPin, Phone, Stethoscope } from "lucide-react";
 import { SiteFooter } from "@/components/landing/SiteFooter";
 import { SiteHeader } from "@/components/landing/SiteHeader";
 import { type DonationDetails, supabase } from "@/lib/supabase";
@@ -215,6 +215,25 @@ function DonatePage() {
                   .
                 </p>
               </form>
+              <section className="mt-10 border-t border-border/70 pt-8" aria-labelledby="business-contact-heading">
+                <h3 id="business-contact-heading" className="font-display text-2xl font-bold text-secondary">
+                  Business contact information
+                </h3>
+                <div className="mt-5 grid gap-3 text-sm leading-relaxed text-muted-foreground">
+                  <a href="mailto:info@rockysempowermentfoundation.org" className="inline-flex items-start gap-3 hover:text-primary">
+                    <Mail className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
+                    info@rockysempowermentfoundation.org
+                  </a>
+                  <a href="tel:+2347064352758" className="inline-flex items-start gap-3 hover:text-primary">
+                    <Phone className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
+                    +234 706 435 2758
+                  </a>
+                  <p className="inline-flex items-start gap-3">
+                    <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
+                    <span>Akowonjo Road, Egbeda, Lagos State 100275, Nigeria</span>
+                  </p>
+                </div>
+              </section>
               {details?.account_number ? (
                 <>
                   <h3 className="mt-10 font-display text-2xl font-bold text-secondary">
